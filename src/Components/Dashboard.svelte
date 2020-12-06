@@ -17,8 +17,7 @@
 </style>
 
 <div class="container" in:fade={{ duration: 250 }}>
-  <div
-    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 text-center">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 text-center">
     {#each events as e}
       <div class="col mt-4">
         <div class="card" on:click={() => currentEvent.set(e)}>

@@ -13,6 +13,8 @@
 
   const oauthUrl =
     'https://discord.com/api/oauth2/authorize?client_id=476105820929654796&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code&scope=guilds%20identify';
+
+  const avatarUrl = `https://cdn.discordapp.com/${R.equals(1, R.length(localStorage.avatar)) ? `embed/avatars/${localStorage.avatar}` : `avatars/${localStorage.id}/${localStorage.avatar}`}${R.test(/^a_/, localStorage.avatar) ? '.gif' : '.png'}`
 </script>
 
 <style>
@@ -79,7 +81,7 @@
             data-toggle="dropdown">
             {localStorage.username}
             <img
-              src="https://cdn.discordapp.com/avatars/{localStorage.id}/{localStorage.avatar}{R.test(/^a_/, localStorage.avatar) ? '.gif' : '.png'}"
+              src={avatarUrl}
               alt="discord avatar"
               height="25px"
               class="rounded-circle" />
