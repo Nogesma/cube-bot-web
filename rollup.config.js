@@ -7,6 +7,7 @@ import css from 'rollup-plugin-css-only';
 import { gzipSync } from 'node-zopfli';
 import gzipPlugin from 'rollup-plugin-gzip';
 import analyze from 'rollup-plugin-analyzer';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -21,8 +22,8 @@ function serve() {
     writeBundle() {
       if (server) return;
       server = require('child_process').spawn(
-        'npm',
-        ['run', 'start', '--', '--dev'],
+        'yarn',
+        ['run', 'start', '--dev'],
         {
           stdio: ['ignore', 'inherit', 'inherit'],
           shell: true,
@@ -50,11 +51,15 @@ export default {
       },
     }),
     css({ output: 'bundle.css' }),
-    resolve({
-      browser: true,
-      dedupe: ['svelte'],
-    }),
+    resolve({ browser: true, dedupe: ['svelte'] }),
     commonjs(),
+    replace({
+      _app: JSON.stringify({
+        env: {
+          WEBSITE_URL: process.env.WEBSITE_URL,
+        },
+      }),
+    }),
     !production && serve(),
     !production && livereload('public'),
 

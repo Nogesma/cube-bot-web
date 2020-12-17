@@ -7,6 +7,7 @@
   import Dashboard from './Components/Dashboard.svelte';
   import Solve from './Components/Solve.svelte';
   import Loading from './Components/Loading.svelte';
+  import NewNavBar from './Components/NewNavBar.svelte';
 
   import { currentEvent } from './stores/times';
   import Settings from './Components/Settings.svelte';

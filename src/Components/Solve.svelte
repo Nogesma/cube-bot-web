@@ -38,17 +38,7 @@
   );
 </script>
 
-<style>
-  /*h1 {*/
-  /*  min-height: 200px;*/
-  /*}*/
-
-  .fullbody {
-    height: 90%;
-  }
-</style>
-
-<div class="container-fluid fullbody" in:fade={{ duration: 250 }}>
+<div class="container-fluid h-100" in:fade={{ duration: 250 }}>
   <div class="row h-100">
     <div class="col-sm-8 h-100">
       <div class="row">

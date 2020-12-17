@@ -4,6 +4,6 @@
 
 <div class="row">
   <div class="col-12 text-center">
-    <h1 class="display-5">{$scrambleString}</h1>
+    <p class="fs-5 font-monospace">{$scrambleString}</p>
   </div>
 </div>

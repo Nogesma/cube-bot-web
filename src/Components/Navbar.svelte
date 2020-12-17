@@ -11,10 +11,15 @@
     settings = false;
   };
 
-  const oauthUrl =
-    'https://discord.com/api/oauth2/authorize?client_id=476105820929654796&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code&scope=guilds%20identify';
+  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=476105820929654796&redirect_uri=${encodeURIComponent(
+    _app.env.WEBSITE_URL
+  )}&response_type=code&scope=guilds%20identify`;
 
-  const avatarUrl = `https://cdn.discordapp.com/${R.equals(1, R.length(localStorage.avatar)) ? `embed/avatars/${localStorage.avatar}` : `avatars/${localStorage.id}/${localStorage.avatar}`}${R.test(/^a_/, localStorage.avatar) ? '.gif' : '.png'}`
+  const avatarUrl = `https://cdn.discordapp.com/${
+    R.equals(1, R.length(localStorage.avatar))
+      ? `embed/avatars/${localStorage.avatar}`
+      : `avatars/${localStorage.id}/${localStorage.avatar}`
+  }${R.test(/^a_/, localStorage.avatar) ? '.gif' : '.png'}`;
 </script>
 
 <style>
@@ -23,7 +28,7 @@
   }
 </style>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1" on:click={returnHome}>
       Cube Competitions
@@ -36,10 +41,6 @@
       <span class="navbar-toggler-icon" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <!--      <ul class="navbar-nav mr-auto mb-2 mb-lg-0">-->
-      <!--        <li class="nav-item">Home</li>-->
-      <!--        <li class="nav-item">Timer</li>-->
-      <!--      </ul>-->
       <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <span

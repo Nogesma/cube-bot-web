@@ -1,16 +1,9 @@
 <script>
   import { svg } from '../stores/scrambles';
-  // TODO: Limit height of svg
 </script>
 
-<style>
-  .test {
-    height: 550px;
-  }
-</style>
-
 <div class="row">
-  <div class="col test">
+  <div class="col h-100">
     {@html $svg}
   </div>
 </div>

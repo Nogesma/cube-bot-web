@@ -58,14 +58,14 @@
     }
     if (running) {
       stopTimer();
-    } else if (event.code === 'Space') {
+    } else if (event.key === ' ') {
       timerSetReady();
     }
     allowed = false;
   };
 
   const up = (event) => {
-    if (!running && !waiting && event.code === 'Space') {
+    if (!running && !waiting && event.key === ' ') {
       startTimer();
     } else {
       timerAfterStop();
@@ -90,7 +90,7 @@
   class="display-1 text-center"
   class:green
   class:red
-  on:touchstart={() => down({ code: 'Space' })}
-  on:touchend={() => up({ code: 'Space' })}>
+  on:touchstart={() => down({ key: ' ' })}
+  on:touchend={() => up({ key: ' ' })}>
   {timerText}
 </h1>

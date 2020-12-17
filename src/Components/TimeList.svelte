@@ -6,7 +6,7 @@
 
   import {
     applyPenality,
-    msToSeconds,
+    timeToSeconds,
     secondsToTime,
   } from '../tools/calculator';
   import { submitEvent } from '../tools/submitTimes';
@@ -20,7 +20,7 @@
   const newTime = (time) =>
     times.update(R.over(solvesLens, R.append([time, 0])));
 
-  const addTime = () => newTime(msToSeconds(inputTime)) && (inputTime = '');
+  const addTime = () => newTime(timeToSeconds(inputTime)) && (inputTime = '');
 
   const deleteLastTime = () => times.update(R.over(solvesLens, R.dropLast(1)));
 
@@ -33,7 +33,6 @@
   const modifyTime = (i, j) => (times[i].solves[j] = [inputTime, 0]);
 
   let inputTime = '';
-  $: isValidInput = R.test(/^(?:([0-5]?\d):)?[0-5]?\d(\.\d+)?$/, inputTime);
 
   let isModalShown;
 
@@ -132,15 +131,11 @@
         </div>
       </div>
       <div class="modal-footer pt-1 pb-1">
-        {#if isValidInput}
-          <button
-            type="button"
-            class="btn btn-dark"
-            data-dismiss="modal"
-            on:click={addTime}>Save</button>
-        {:else}
-          <button type="button" class="btn btn-dark disabled">Save</button>
-        {/if}
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-dismiss="modal"
+          on:click={addTime}>Save</button>
       </div>
     </div>
   </div>

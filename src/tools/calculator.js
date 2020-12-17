@@ -25,6 +25,23 @@ const secondsToTime = (time) => {
   return `${min ? min + ':' : ''}${s}`;
 };
 
+const timeToSeconds = (time) => {
+  if (time === 'DNF') {
+    return Infinity;
+  }
+
+  return Number(
+    R.head(
+      R.match(
+        /\d+(\.\d{1,2})?/g,
+        String(
+          R.reduce((acc, t) => 60 * acc + Number(t), 0, R.split(':', time))
+        )
+      )
+    )
+  );
+};
+
 const averageOfFiveCalculator = R.ifElse(
   R.pipe(R.filter(R.lt(0)), R.length, R.equals(5)),
   R.pipe(
@@ -40,6 +57,7 @@ const averageOfFiveCalculator = R.ifElse(
 
 export {
   secondsToTime,
+  timeToSeconds,
   parseTimesArray,
   applyPenality,
   averageOfFiveCalculator,
