@@ -56,6 +56,7 @@ export default {
     replace({
       _app: JSON.stringify({
         env: {
+          CLIENT_ID: process.env.CLIENT_ID,
           WEBSITE_URL: process.env.WEBSITE_URL,
         },
       }),

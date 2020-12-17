@@ -11,7 +11,9 @@
     settings = false;
   };
 
-  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=476105820929654796&redirect_uri=${encodeURIComponent(
+  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${
+    _app.env.CLIENT_ID
+  }&redirect_uri=${encodeURIComponent(
     _app.env.WEBSITE_URL
   )}&response_type=code&scope=guilds%20identify`;
 
