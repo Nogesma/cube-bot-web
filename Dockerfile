@@ -1,4 +1,4 @@
-FROM nginx:1.18
+FROM caddy:2
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY public /etc/nginx/html
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY public /srv

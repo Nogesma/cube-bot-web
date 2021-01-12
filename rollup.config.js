@@ -63,7 +63,6 @@ export default {
     }),
     !production && serve(),
     !production && livereload('public'),
-
     production && analyze({ summaryOnly: true, limit: 10 }),
     production && terser(),
     production &&
