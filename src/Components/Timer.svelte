@@ -39,7 +39,7 @@
     clearTimeout(timeout);
 
     finalTime = dayjs().diff(startTime);
-    timerText = finalTime;
+    timerText = secondsToTime(msToSeconds(finalTime));
     newTime(finalTime);
   };
 
