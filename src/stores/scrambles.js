@@ -7,7 +7,7 @@ const scrambles = derived(
   currentEvent,
   ($currentEvent, set) => {
     if ($currentEvent) {
-      fetch(`/api/scrambles/${$currentEvent}`)
+      fetch(`/api/scrambles/${$currentEvent}/`)
         .then((res) => res.json())
         .then((res) => set(res?.scrambles));
     } else {
