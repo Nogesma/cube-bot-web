@@ -29,9 +29,9 @@
 {#if loading}
   <Loading />
 {:else}
-  <Navbar bind:settings />
   {#await fetch(`/api/ping`).then((res) => res.ok) then isLoggedIn}
     {#if isLoggedIn}
+      <Navbar bind:settings login={true} />
       {#if settings}
         <Settings bind:settings />
       {:else if $currentEvent}
@@ -40,6 +40,7 @@
         <Dashboard />
       {/if}
     {:else}
+      <Navbar bind:settings login={false} />
       <Login />
     {/if}
   {/await}
