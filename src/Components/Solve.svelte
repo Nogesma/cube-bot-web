@@ -45,10 +45,9 @@
         <Scrambles />
       </div>
       <div class="row">
+        <Timer />
         {#if R.equals(5, $scrambleIndex)}
           <h1 class="display-1">Veuillez soumettre vos temps</h1>
-        {:else}
-          <Timer />
         {/if}
       </div>
     </div>
@@ -57,7 +56,9 @@
       {#if R.equals(5, $scrambleIndex)}
         <p>
           ao5:
-          {secondsToTime(averageOfFiveCalculator(parseTimesArray($times[index].solves)))}
+          {secondsToTime(
+            averageOfFiveCalculator(parseTimesArray($times[index].solves))
+          )}
         </p>
       {:else if displayScramble}
         <Svg />
