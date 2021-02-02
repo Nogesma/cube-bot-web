@@ -1,5 +1,6 @@
 <script>
   import { scrambleString } from '../stores/scrambles';
+  $: console.log($scrambleString);
 </script>
 
 <div class="row">
@@ -11,5 +12,6 @@
 <style>
   .scrambleFont {
     font-size: 2vmax;
+    white-space: pre-line;
   }
 </style>
