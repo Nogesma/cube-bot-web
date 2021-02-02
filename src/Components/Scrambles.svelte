@@ -4,6 +4,12 @@
 
 <div class="row">
   <div class="col-12 text-center">
-    <p class="fs-5 font-monospace">{$scrambleString}</p>
+    <p class="font-monospace scrambleFont">{$scrambleString}</p>
   </div>
 </div>
+
+<style>
+  .scrambleFont {
+    font-size: 2vmax;
+  }
+</style>
