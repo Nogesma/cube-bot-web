@@ -1,4 +1,5 @@
 <script>
+  import * as R from 'ramda';
   import dayjs from 'dayjs';
   import { events } from '../data/config';
   import { getAvatarUrl, formatSolvesArray } from '../tools/utilities';
@@ -87,12 +88,12 @@
         </tr>
       </thead>
       <tbody>
-        {#each rankings as { solves, average, single, avatar, username }, i}
+        {#each rankings as { author, solves, average, single, avatar, username }, i}
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
               <img
-                src={avatar}
+                src={getAvatarUrl(String(avatar), author)}
                 alt="discord avatar"
                 height="25px"
                 class="rounded-circle"
@@ -117,17 +118,17 @@
         </tr>
       </thead>
       <tbody>
-        {#each rankings as { score, attendances, avatar, username }, i}
+        {#each rankings as { author, score, attendances, avatar, username }, i}
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
               <img
-                src={avatar}
+                src={getAvatarUrl(String(avatar), author)}
                 alt="discord avatar"
                 height="25px"
                 class="rounded-circle"
               />
-              {username}
+              {username}: {avatar} : {author}
             </td>
             <td class="col">{score}</td>
             <td class="col">{attendances}</td>
