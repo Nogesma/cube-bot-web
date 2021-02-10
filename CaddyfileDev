@@ -1,0 +1,6 @@
+localhost {
+  encode zstd gzip
+  root * public
+  file_server
+  reverse_proxy /api/* localhost:3000
+}

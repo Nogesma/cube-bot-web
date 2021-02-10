@@ -82,9 +82,9 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nom</th>
-          <th scope="col">Ao5</th>
-          <th scope="col">Single</th>
-          <th scope="col" colspan="5">Solves</th>
+          <th scope="col">Moyenne</th>
+          <th scope="col">Meilleur</th>
+          <th scope="col">Résultats</th>
         </tr>
       </thead>
       <tbody>
@@ -102,10 +102,10 @@
             </td>
             <td class="col">{average}</td>
             <td class="col">{single}</td>
-            {#each formatSolvesArray(solves) as s}
-              <td class="col">{s}</td>
-            {/each}
-          </tr>
+            <td class="col word-spacing"
+              >{R.join(' ', formatSolvesArray(solves))}
+            </td></tr
+          >
         {/each}
       </tbody>
     {:else}
@@ -128,7 +128,7 @@
                 height="25px"
                 class="rounded-circle"
               />
-              {username}: {avatar} : {author}
+              {username}
             </td>
             <td class="col">{score}</td>
             <td class="col">{attendances}</td>
@@ -138,3 +138,9 @@
     {/if}
   </table>
 </div>
+
+<style>
+  .word-spacing {
+    word-spacing: 30px;
+  }
+</style>

@@ -49,7 +49,7 @@
         <li class="nav-item">
           <span
             class="nav-link {currentPage === pages.Settings ? 'active' : ''}"
-            on:click={() => (currentPage = pages.Settings)}>Réglagles</span
+            on:click={() => (currentPage = pages.Settings)}>Réglages</span
           >
         </li>
       </ul>

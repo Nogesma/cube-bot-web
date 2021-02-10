@@ -44,7 +44,7 @@ const disableScramblesDisplayForBlind = writable(
   JSON.parse(localStorage.getItem('disableScramblesDisplayForBlind')) ?? true
 );
 const scrambleSize = writable(
-  JSON.parse(localStorage.getItem('scrambleSize')) ?? 10
+  JSON.parse(localStorage.getItem('scrambleSize')) ?? 30
 );
 
 cubeColourScheme.subscribe((val) =>
