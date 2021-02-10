@@ -87,12 +87,12 @@
         </tr>
       </thead>
       <tbody>
-        {#each rankings as { author, solves, average, single, avatar, username }, i}
+        {#each rankings as { solves, average, single, avatar, username }, i}
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
               <img
-                src={getAvatarUrl(avatar, author)}
+                src={avatar}
                 alt="discord avatar"
                 height="25px"
                 class="rounded-circle"
@@ -117,12 +117,12 @@
         </tr>
       </thead>
       <tbody>
-        {#each rankings as { author, score, attendances, avatar, username }, i}
+        {#each rankings as { score, attendances, avatar, username }, i}
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
               <img
-                src={getAvatarUrl(avatar, author)}
+                src={avatar}
                 alt="discord avatar"
                 height="25px"
                 class="rounded-circle"
