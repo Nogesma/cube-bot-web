@@ -128,7 +128,7 @@
                 height="25px"
                 class="rounded-circle"
               />
-              {username}: {avatar} : {author}
+              {username}
             </td>
             <td class="col">{score}</td>
             <td class="col">{attendances}</td>
