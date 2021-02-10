@@ -43,6 +43,9 @@ const displayScrambles = writable(
 const disableScramblesDisplayForBlind = writable(
   JSON.parse(localStorage.getItem('disableScramblesDisplayForBlind')) ?? true
 );
+const scrambleSize = writable(
+  JSON.parse(localStorage.getItem('scrambleSize')) ?? 10
+);
 
 cubeColourScheme.subscribe((val) =>
   localStorage.setItem('cubeColourScheme', JSON.stringify(val))
@@ -63,6 +66,7 @@ displayScrambles.subscribe((val) =>
 disableScramblesDisplayForBlind.subscribe((val) =>
   localStorage.setItem('disableScramblesDisplayForBlind', val)
 );
+scrambleSize.subscribe((val) => localStorage.setItem('scrambleSize', val));
 
 export {
   cubeColourScheme,
@@ -71,4 +75,5 @@ export {
   sq1ColourScheme,
   displayScrambles,
   disableScramblesDisplayForBlind,
+  scrambleSize,
 };

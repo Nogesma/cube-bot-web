@@ -1,17 +1,15 @@
 <script>
   import { scrambleString } from '../stores/scrambles';
-  $: console.log($scrambleString);
+  import { scrambleSize } from '../stores/settings';
 </script>
 
 <div class="row">
   <div class="col-12 text-center">
-    <p class="font-monospace scrambleFont">{$scrambleString}</p>
+    <p
+      class="font-monospace"
+      style="font-size: {$scrambleSize}px; white-space: pre-line;"
+    >
+      {$scrambleString}
+    </p>
   </div>
 </div>
-
-<style>
-  .scrambleFont {
-    font-size: 2vmax;
-    white-space: pre-line;
-  }
-</style>

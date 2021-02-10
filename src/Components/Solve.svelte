@@ -36,6 +36,7 @@
     $currentEvent,
     $disableScramblesDisplayForBlind
   );
+  $: console.log($times[index].solves[4]);
 </script>
 
 <div class="container-fluid h-100" in:fade={{ duration: 250 }}>
@@ -45,9 +46,13 @@
         <Scrambles />
       </div>
       <div class="row">
-        <Timer />
         {#if R.equals(5, $scrambleIndex)}
           <h1 class="display-1">Veuillez soumettre vos temps</h1>
+          <h1 class="display-1 text-center">
+            {secondsToTime($times[index].solves[4][0])}
+          </h1>
+        {:else}
+          <Timer />
         {/if}
       </div>
     </div>

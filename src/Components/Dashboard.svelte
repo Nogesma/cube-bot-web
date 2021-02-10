@@ -1,9 +1,32 @@
 <script>
   import { fade } from 'svelte/transition';
-  import { events } from '../data/config';
+  import { pages, events } from '../data/config';
 
   import { currentEvent } from '../stores/times';
+
+  export let currentPage;
 </script>
+
+<div class="container" in:fade={{ duration: 250 }}>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 text-center">
+    {#each events as e}
+      <div class="col mt-4">
+        <div
+          class="card"
+          on:click={() => {
+            currentEvent.set(e);
+            currentPage = pages.Timer;
+          }}
+        >
+          <span class="cubing-icon cubing-icon-5x event-{e}" />
+          <div class="card-footer bg-transparent">
+            <h4 class="">{e}</h4>
+          </div>
+        </div>
+      </div>
+    {/each}
+  </div>
+</div>
 
 <style>
   .card {
@@ -15,19 +38,3 @@
     transition-duration: 0.5s;
   }
 </style>
-
-<div class="container" in:fade={{ duration: 250 }}>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 text-center">
-    {#each events as e}
-      <div class="col mt-4">
-        <div class="card" on:click={() => currentEvent.set(e)}>
-          <!--          <img src="img/{e}.svg" class="card-img-top" alt={e} />-->
-          <span class="cubing-icon cubing-icon-5x event-{e}" />
-          <div class="card-footer bg-transparent">
-            <h4 class="">{e}</h4>
-          </div>
-        </div>
-      </div>
-    {/each}
-  </div>
-</div>

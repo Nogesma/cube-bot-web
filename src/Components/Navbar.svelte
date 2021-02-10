@@ -1,16 +1,11 @@
 <script>
   import Cookies from 'js-cookie';
-  import * as R from 'ramda';
-
   import { currentEvent } from '../stores/times';
-  import { events } from '../data/config';
+  import { events, pages } from '../data/config';
+  import { getAvatarUrl } from '../tools/utilities';
 
-  export let settings;
+  export let currentPage;
   export let login;
-  const returnHome = () => {
-    currentEvent.set('');
-    settings = false;
-  };
 
   const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${
     _app.env.CLIENT_ID
@@ -18,51 +13,54 @@
     _app.env.WEBSITE_URL
   )}&response_type=code&scope=guilds%20identify`;
 
-  const avatarUrl = `https://cdn.discordapp.com/${
-    R.equals(1, R.length(localStorage.avatar))
-      ? `embed/avatars/${localStorage.avatar}`
-      : `avatars/${localStorage.id}/${localStorage.avatar}`
-  }${R.test(/^a_/, localStorage.avatar) ? '.gif' : '.png'}`;
+  const avatarUrl = getAvatarUrl(localStorage.avatar, localStorage.id);
 </script>
-
-<style>
-  .dropdown-menu {
-    z-index: 1100;
-  }
-</style>
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1" on:click={returnHome}>
+    <span
+      class="navbar-brand mb-0 h1"
+      on:click={() => (currentPage = pages.Dashboard)}
+    >
       Cube Competitions
     </span>
     <button
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
-      data-target="#navbarText">
+      data-target="#navbarText"
+    >
       <span class="navbar-toggler-icon" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <span
-            class="nav-link {$currentEvent ? '' : 'active'}"
-            on:click={returnHome}>Home</span>
+            class="nav-link {currentPage !== pages.Dashboard ? '' : 'active'}"
+            on:click={() => (currentPage = pages.Dashboard)}>Menu</span
+          >
         </li>
         <li class="nav-item">
           <span
-            class="nav-link {$currentEvent ? 'active' : 'disabled'}"
-            on:click={() => (settings = false)}>Timer</span>
+            class="nav-link {currentPage === pages.Rankings ? 'active' : ''}"
+            on:click={() => (currentPage = pages.Rankings)}>Classement</span
+          >
+        </li>
+        <li class="nav-item">
+          <span
+            class="nav-link {currentPage === pages.Settings ? 'active' : ''}"
+            on:click={() => (currentPage = pages.Settings)}>Réglagles</span
+          >
         </li>
       </ul>
       {#if login}
-        {#if $currentEvent}
+        {#if currentPage === pages.Timer}
           <span class="nav-item dropdown">
             <button
               class="btn btn-outline-light mr-2 dropdown-toggle"
               type="button"
-              data-toggle="dropdown">
+              data-toggle="dropdown"
+            >
               {$currentEvent}
             </button>
             <div class="dropdown-menu dropdown-menu-sm-right">
@@ -72,7 +70,8 @@
                   <button
                     class="dropdown-item"
                     href="#"
-                    on:click={() => currentEvent.set(e)}>{e}</button>
+                    on:click={() => currentEvent.set(e)}>{e}</button
+                  >
                 {/if}
               {/each}
             </div>
@@ -82,32 +81,38 @@
           <button
             class="btn btn-outline-light dropdown-toggle"
             type="button"
-            data-toggle="dropdown">
+            data-toggle="dropdown"
+          >
             {localStorage.username}
             <img
               src={avatarUrl}
               alt="discord avatar"
               height="25px"
-              class="rounded-circle" />
+              class="rounded-circle"
+            />
           </button>
           <div class="dropdown-menu dropdown-menu-sm-right">
-            <span
-              class="dropdown-item text-reset text-decoration-none"
-              on:click={() => (settings = true)}>Settings</span>
             <a
               class="dropdown-item text-reset text-decoration-none"
               href="/"
               on:click={() => {
                 localStorage.clear();
                 Cookies.remove('token');
-              }}>Logout</a>
+              }}>Logout</a
+            >
           </div>
         </span>
       {:else}
-        <a
-          class="btn btn-light text-reset text-decoration-none"
-          href={oauthUrl}>Log in</a>
+        <a class="btn btn-light text-reset text-decoration-none" href={oauthUrl}
+          >Log in</a
+        >
       {/if}
     </div>
   </div>
 </nav>
+
+<style>
+  .dropdown-menu {
+    z-index: 1100;
+  }
+</style>

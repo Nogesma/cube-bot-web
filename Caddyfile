@@ -1,5 +1,6 @@
-cube.manosegransan.eu {
+localhost {
   encode zstd gzip
+  root * public
   file_server
-  reverse_proxy /api/* node:3000
+  reverse_proxy /api/* localhost:3000
 }
