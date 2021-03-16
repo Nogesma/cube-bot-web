@@ -4,8 +4,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
-import { gzipSync } from 'node-zopfli';
-import gzipPlugin from 'rollup-plugin-gzip';
 import analyze from 'rollup-plugin-analyzer';
 import replace from '@rollup/plugin-replace';
 
@@ -65,10 +63,6 @@ export default {
     !production && livereload('public'),
     production && analyze({ summaryOnly: true, limit: 10 }),
     production && terser(),
-    production &&
-      gzipPlugin({
-        customCompression: (content) => gzipSync(Buffer.from(content), {}),
-      }),
   ],
   watch: {
     clearScreen: false,
