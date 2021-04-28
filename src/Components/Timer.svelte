@@ -75,6 +75,18 @@
   };
 </script>
 
+<svelte:window on:keydown={down} on:keyup={up} />
+
+<h1
+  class="display-1 text-center"
+  class:green
+  class:red
+  on:touchstart={() => down({ key: ' ' })}
+  on:touchend={() => up({ key: ' ' })}
+>
+  {timerText}
+</h1>
+
 <style>
   .red {
     color: red;
@@ -84,14 +96,3 @@
     color: green;
   }
 </style>
-
-<svelte:window on:keydown={down} on:keyup={up} />
-
-<h1
-  class="display-1 text-center"
-  class:green
-  class:red
-  on:touchstart={() => down({ key: ' ' })}
-  on:touchend={() => up({ key: ' ' })}>
-  {timerText}
-</h1>
