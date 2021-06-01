@@ -10,7 +10,6 @@ const parseTimesArray = R.map(applyPenality);
 
 const msToSeconds = R.pipe(String, R.dropLast(1), R.divide(R.__, 100));
 
-// TODO: Fix roundings issues. ex: [0.51, 0.5, 0.48, 0.38, 0.35] -> 0.46 but should be 0.45
 const secondsToTime = (time) => {
   if (time === Infinity) {
     return 'DNF';
