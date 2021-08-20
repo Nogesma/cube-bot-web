@@ -43,3 +43,5 @@
 .cubing-icon.event-MEGA:before { content: "\EA11" }
 .cubing-icon.event-PYRA:before { content: "\EA13" }
 .cubing-icon.event-SQ1:before { content: "\EA15" }
+.cubing-icon.event-CLOCK:before { content: "\EA0F" }
+.cubing-icon.event-SKEWB:before { content: "\EA14" }

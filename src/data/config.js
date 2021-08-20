@@ -15,6 +15,8 @@ const events = [
   'SQ1',
   'MEGA',
   'PYRA',
+  'CLOCK',
+  'SKEWB',
 ];
 
 const cubeDefaultColourScheme = {
