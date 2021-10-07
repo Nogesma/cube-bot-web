@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+
   onMount(() => {
     window.setInterval(() => {
       let wait = document.getElementById('wait');

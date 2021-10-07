@@ -42,12 +42,15 @@
     text-align: left;
     margin-bottom: 0.25rem;
   }
+
   ul {
     padding-left: 0;
   }
+
   ul ul {
     padding-left: 1rem;
   }
+
   a {
     color: inherit;
     text-decoration: none;

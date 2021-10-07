@@ -3,6 +3,9 @@
     displayScrambles,
     disableScramblesDisplayForBlind,
     scrambleSize,
+    useInspection,
+    timerUpdate,
+    runningTimerText,
   } from '../stores/settings';
 </script>
 
@@ -49,16 +52,41 @@
         bind:value={$scrambleSize}
       />
     </div>
-    <!--      <div class="col form-check form-switch">-->
-    <!--      <input-->
-    <!--        class="form-check-input"-->
-    <!--        type="checkbox"-->
-    <!--        id="useInspection"-->
-    <!--        checked={useInspection}-->
-    <!--        disabled-->
-    <!--      />-->
-    <!--      <label class="form-check-label" for="useInspection">Use Inspection</label>-->
-    <!--    </div>-->
+    <div class="col form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="useInspection"
+        bind:checked={$useInspection}
+      />
+      <label class="form-check-label" for="useInspection"
+        >Activer l'inspection</label
+      >
+    </div>
+    <li>
+      <div class="col form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="timerUpdate"
+          bind:checked={$timerUpdate}
+        />
+        <label class="form-check-label" for="timerUpdate"
+          >Activer l'actualisation du chronomètre</label
+        >
+      </div>
+      <ul>
+        <div class="col input-group">
+          <span class="input-group-text">Texte du chronomètre</span>
+          <input
+            type="text"
+            class="form-control"
+            disabled={$timerUpdate}
+            bind:value={$runningTimerText}
+          />
+        </div>
+      </ul>
+    </li>
     <!--    <div class="input-group mt-3 mb-3">-->
     <!--      <label class="input-group-text text-muted" for="inputGroupSelect01"-->
     <!--        >Theme</label-->

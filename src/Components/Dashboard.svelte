@@ -33,6 +33,7 @@
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
     transition-duration: 0.5s;
   }
+
   .card:hover {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
     transition-duration: 0.5s;

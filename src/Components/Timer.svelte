@@ -1,89 +1,114 @@
 <script>
-  //TODO: Set bigger touch down zone for mobile users
   import dayjs from 'dayjs';
+  import * as R from 'ramda';
 
   import { msToSeconds, secondsToTime } from '../tools/calculator';
-  import * as R from 'ramda';
   import { currentEvent, times } from '../stores/times';
+  import {
+    useInspection,
+    timerUpdate,
+    runningTimerText,
+  } from '../stores/settings';
 
   let startTime;
   let timeout;
-  let allowed = true;
+  let inspectionTime = 0;
+  let timerStatus = 0; // 0 = stopped, 1 = running, 2 = inspecting, 3 = waiting
+
+  let hasInspection = $useInspection && R.not($currentEvent === '3BLD');
   let green = false;
   let red = false;
-  let running = false;
   let timerText = 'Ready';
   let finalTime;
-  let waiting = false;
 
   $: eventIndex = R.findIndex(R.propEq('event')($currentEvent))($times);
   $: solvesLens = R.lensPath([eventIndex, 'solves']);
 
-  const newTime = (time) =>
-    times.update(R.over(solvesLens, R.append([msToSeconds(time), 0])));
+  const newTime = (time, penalty) =>
+    times.update(R.over(solvesLens, R.append([msToSeconds(time), penalty])));
 
   const displayTime = () =>
     (timerText = secondsToTime(msToSeconds(dayjs().diff(startTime))));
 
   const startTimer = () => {
-    running = true;
-    timeout = setInterval(displayTime, 10);
-    startTime = dayjs();
     green = false;
+    red = false;
+    clearTimeout(timeout);
+    inspectionTime = hasInspection ? msToSeconds(dayjs().diff(startTime)) : 0;
+    startTime = dayjs();
+    if ($timerUpdate) {
+      timeout = setInterval(displayTime, 10);
+    } else {
+      timerText = $runningTimerText;
+    }
   };
 
   const stopTimer = () => {
-    running = false;
-    waiting = true;
-    red = true;
-    clearTimeout(timeout);
-
     finalTime = dayjs().diff(startTime);
+    clearTimeout(timeout);
     timerText = secondsToTime(msToSeconds(finalTime));
-    newTime(finalTime);
+    const penalty = inspectionTime < 15 ? 0 : inspectionTime < 17 ? 1 : 2;
+    newTime(finalTime, penalty);
+    red = true;
   };
 
   const timerSetReady = () => {
-    waiting = false;
-    timerText = '0.00';
+    if (!hasInspection) timerText = '0.00';
     green = true;
   };
 
-  const timerAfterStop = () => {
-    red = false;
+  const startInspection = () => {
+    green = false;
+    red = true;
+    startTime = dayjs();
+    timerText = 15 - msToSeconds(dayjs().diff(startTime)).toFixed(0);
+    timeout = setInterval(() => {
+      const diff = 15 - msToSeconds(dayjs().diff(startTime)).toFixed(0);
+      if (diff > 0) timerText = diff;
+      else if (diff > -2) timerText = '+2';
+      else timerText = 'DNF';
+    }, 1000);
   };
 
   const down = (event) => {
-    if (!allowed) {
+    if (event.repeat) return;
+    console.log(timerStatus);
+    if (timerStatus === 1) {
+      stopTimer();
+      timerStatus = 0;
       return;
     }
-    if (running) {
-      stopTimer();
-    } else if (event.key === ' ') {
+    if (event.key !== ' ') return;
+    if (timerStatus === 0) {
       timerSetReady();
+      timerStatus = 3;
+      return;
     }
-    allowed = false;
+    if (timerStatus === 2) timerSetReady();
   };
 
   const up = (event) => {
-    if (!running && !waiting && event.key === ' ') {
+    if (event.key !== ' ') return;
+    console.log(timerStatus);
+    if (timerStatus === 3) {
+      if (hasInspection) {
+        startInspection();
+        timerStatus = 2;
+      } else {
+        startTimer();
+        timerStatus = 1;
+      }
+    } else if (timerStatus === 2) {
       startTimer();
-    } else {
-      timerAfterStop();
-    }
-    allowed = true;
+      timerStatus = 1;
+    } else if (timerStatus === 0) red = false;
   };
+  export { up, down };
 </script>
 
 <svelte:window on:keydown={down} on:keyup={up} />
 
-<h1
-  class="display-1 text-center"
-  class:green
-  class:red
-  on:touchstart={() => down({ key: ' ' })}
-  on:touchend={() => up({ key: ' ' })}
->
+<h1 class="display-1 text-center" class:green class:red>
   {timerText}
 </h1>
 

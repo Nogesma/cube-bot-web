@@ -10,9 +10,9 @@
   let stringDate = dayjs().format('YYYY-MM-DD');
 
   const fetchRankings = async () =>
-    fetch(
-      `/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`
-    ).then((res) => res.json());
+    fetch(`/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`).then(
+      (res) => res.json()
+    );
 
   const handleSubmit = async () => {
     rankings = [];
@@ -67,8 +67,8 @@
         </div>
         <div class="col">
           <button type="submit" class="btn btn-dark" disabled={!isValidDate}
-            >Valider</button
-          >
+            >Valider
+          </button>
         </div>
       </div>
     </div>
@@ -104,8 +104,8 @@
             <td class="col">{single}</td>
             <td class="col word-spacing"
               >{R.join(' ', formatSolvesArray(solves))}
-            </td></tr
-          >
+            </td>
+          </tr>
         {/each}
       </tbody>
     {:else}

@@ -49,8 +49,8 @@
     </div>
     <div class="col-1">
       <button class="btn btn-outline-dark" on:click={cubeColourScheme.reset}
-        >Réinitialiser</button
-      >
+        >Réinitialiser
+      </button>
     </div>
   </div>
 </div>
@@ -85,8 +85,8 @@
     </div>
     <div class="col-1">
       <button class="btn btn-outline-dark" on:click={pyraColourScheme.reset}
-        >Réinitialiser</button
-      >
+        >Réinitialiser
+      </button>
     </div>
   </div>
 </div>
@@ -121,8 +121,8 @@
     </div>
     <div class="col-1">
       <button class="btn btn-outline-dark" on:click={megaColourScheme.reset}
-        >Réinitialiser</button
-      >
+        >Réinitialiser
+      </button>
     </div>
   </div>
 </div>
@@ -157,8 +157,8 @@
     </div>
     <div class="col-1">
       <button class="btn btn-outline-dark" on:click={sq1ColourScheme.reset}
-        >Réinitialiser</button
-      >
+        >Réinitialiser
+      </button>
     </div>
   </div>
 </div>

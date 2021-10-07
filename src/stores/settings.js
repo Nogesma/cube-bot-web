@@ -46,6 +46,15 @@ const disableScramblesDisplayForBlind = writable(
 const scrambleSize = writable(
   JSON.parse(localStorage.getItem('scrambleSize')) ?? 30
 );
+const useInspection = writable(
+  JSON.parse(localStorage.getItem('useInspection')) ?? false
+);
+const timerUpdate = writable(
+  JSON.parse(localStorage.getItem('timerUpdate')) ?? true
+);
+const runningTimerText = writable(
+  localStorage.getItem('runningTimerText') ?? '⏱'
+);
 
 cubeColourScheme.subscribe((val) =>
   localStorage.setItem('cubeColourScheme', JSON.stringify(val))
@@ -67,6 +76,11 @@ disableScramblesDisplayForBlind.subscribe((val) =>
   localStorage.setItem('disableScramblesDisplayForBlind', val)
 );
 scrambleSize.subscribe((val) => localStorage.setItem('scrambleSize', val));
+useInspection.subscribe((val) => localStorage.setItem('useInspection', val));
+timerUpdate.subscribe((val) => localStorage.setItem('timerUpdate', val));
+runningTimerText.subscribe((val) =>
+  localStorage.setItem('runningTimerText', val)
+);
 
 export {
   cubeColourScheme,
@@ -76,4 +90,7 @@ export {
   displayScrambles,
   disableScramblesDisplayForBlind,
   scrambleSize,
+  useInspection,
+  timerUpdate,
+  runningTimerText,
 };
