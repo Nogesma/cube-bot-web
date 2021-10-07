@@ -7,10 +7,8 @@
   export let currentPage;
   export let login;
 
-  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${
-    process.env.CLIENT_ID
-  }&redirect_uri=${encodeURIComponent(
-    process.env.WEBSITE_URL
+  const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${__CLIENT_ID__}&redirect_uri=${encodeURIComponent(
+    __WEBSITE_URL__
   )}&response_type=code&scope=guilds%20identify`;
 
   const avatarUrl = getAvatarUrl(localStorage.avatar, localStorage.id);
