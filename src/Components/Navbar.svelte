@@ -8,9 +8,9 @@
   export let login;
 
   const oauthUrl = `https://discord.com/api/oauth2/authorize?client_id=${
-    _app.env.CLIENT_ID
+    process.env.CLIENT_ID
   }&redirect_uri=${encodeURIComponent(
-    _app.env.WEBSITE_URL
+    process.env.WEBSITE_URL
   )}&response_type=code&scope=guilds%20identify`;
 
   const avatarUrl = getAvatarUrl(localStorage.avatar, localStorage.id);

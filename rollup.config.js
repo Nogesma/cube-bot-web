@@ -52,12 +52,8 @@ export default {
     resolve({ browser: true, dedupe: ['svelte'] }),
     commonjs(),
     replace({
-      _app: JSON.stringify({
-        env: {
-          CLIENT_ID: process.env.CLIENT_ID,
-          WEBSITE_URL: process.env.WEBSITE_URL,
-        },
-      }),
+      'process.env.CLIENT_ID': process.env.CLIENT_ID,
+      'process.env.WEBSITE_URL': process.env.WEBSITE_URL,
     }),
     !production && serve(),
     !production && livereload('public'),
