@@ -5,5 +5,5 @@ manosgr.me {
 }
 
 cube.manosegransan.eu {
-    redir https://manosgr.eu permanent
+    redir https://manosgr.me permanent
 }
