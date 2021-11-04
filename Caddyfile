@@ -1,5 +1,9 @@
-cube.manosegransan.eu {
+manosgr.me {
   encode zstd gzip
   file_server
   reverse_proxy /api/* node:3000
+}
+
+cube.manosegransan.eu {
+    redir https://manosgr.eu permanent
 }
