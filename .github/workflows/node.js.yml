@@ -19,7 +19,7 @@ jobs:
       - run: yarn
       - run: yarn run build
         env:
-          WEBSITE_URL: 'https://cube.manosegransan.eu/'
+          WEBSITE_URL: 'https://manosgr.me/'
           CLIENT_ID: '475749622384558080'
       - uses: actions/upload-artifact@v2
         with:
