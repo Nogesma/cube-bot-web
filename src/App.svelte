@@ -1,5 +1,6 @@
 <script>
   import Navbar from './Components/Navbar.svelte';
+  import Warning from './Components/Warning.svelte';
   import Login from './Components/Login.svelte';
   import Dashboard from './Components/Dashboard.svelte';
   import Solve from './Components/Solve.svelte';
@@ -24,11 +25,16 @@
 
   const loading = urlParams.has('code');
   if (loading) discordAuth();
+  const isRedirect = urlParams.has('redirect');
+  console.log({ isRedirect });
 </script>
 
 {#if loading}
   <Loading />
 {:else}
+  {#if isRedirect}
+    <Warning />
+  {/if}
   {#await fetch(`/api/ping`).then((res) => res.ok) then isLoggedIn}
     {#if isLoggedIn}
       <Navbar bind:currentPage login={true} />
