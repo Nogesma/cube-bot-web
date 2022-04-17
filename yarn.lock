@@ -111,15 +111,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-wasm@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "@rollup/plugin-wasm@npm:5.1.2"
-  peerDependencies:
-    rollup: ^1.20.0 || ^2.0.0
-  checksum: ba8d02fd351900b7e1fa722b7f71cf420dd5b67dcade3bf91f7ac60d75fca1fc4ed61ff5cecfe033dc9bfd7f857ab374d6858de74fcf5fae3acebfbc193ffa01
-  languageName: node
-  linkType: hard
-
 "@rollup/pluginutils@npm:4":
   version: 4.1.2
   resolution: "@rollup/pluginutils@npm:4.1.2"
@@ -444,7 +435,6 @@ __metadata:
     "@rollup/plugin-commonjs": ^21.1.0
     "@rollup/plugin-node-resolve": ^13.2.1
     "@rollup/plugin-replace": ^4.0.0
-    "@rollup/plugin-wasm": ^5.1.2
     dayjs: ^1.11.1
     hello-wasm-pack: ^0.1.0
     js-cookie: ^3.0.1
