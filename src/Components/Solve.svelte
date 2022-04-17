@@ -36,7 +36,6 @@
     $currentEvent,
     $disableScramblesDisplayForBlind
   );
-  $: console.log($times[index].solves[4]);
 </script>
 
 <div class="container-fluid h-100" in:fade={{ duration: 250 }}>

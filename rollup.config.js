@@ -52,6 +52,7 @@ export default {
     resolve({ browser: true, dedupe: ['svelte'] }),
     commonjs(),
     replace({
+      preventAssignment: true,
       __CLIENT_ID__: JSON.stringify(process.env.CLIENT_ID),
       __WEBSITE_URL__: JSON.stringify(process.env.WEBSITE_URL),
     }),

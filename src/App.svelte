@@ -26,7 +26,6 @@
   const loading = urlParams.has('code');
   if (loading) discordAuth();
   const isRedirect = urlParams.has('redirect');
-  console.log({ isRedirect });
 </script>
 
 {#if loading}

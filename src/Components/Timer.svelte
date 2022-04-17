@@ -5,9 +5,9 @@
   import { msToSeconds, secondsToTime } from '../tools/calculator';
   import { currentEvent, times } from '../stores/times';
   import {
-    useInspection,
-    timerUpdate,
     runningTimerText,
+    timerUpdate,
+    useInspection,
   } from '../stores/settings';
 
   let startTime;
@@ -71,8 +71,8 @@
   };
 
   const down = (event) => {
+    if (event.key === ' ') event.preventDefault();
     if (event.repeat) return;
-    console.log(timerStatus);
     if (timerStatus === 1) {
       stopTimer();
       timerStatus = 0;
@@ -89,7 +89,6 @@
 
   const up = (event) => {
     if (event.key !== ' ') return;
-    console.log(timerStatus);
     if (timerStatus === 3) {
       if (hasInspection) {
         startInspection();

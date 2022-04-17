@@ -3,7 +3,3 @@ manosgr.me {
   file_server
   reverse_proxy /api/* node:3000
 }
-
-cube.manosegransan.eu {
-    redir https://manosgr.me?redirect=true permanent
-}

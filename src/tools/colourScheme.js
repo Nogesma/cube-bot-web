@@ -18,7 +18,7 @@ const applyColourScheme = (svgString, defaultColourScheme, colourScheme) => {
   R.forEachObjIndexed(
     (value, key) =>
       (finalSvgString = R.replace(
-        new RegExp(value, 'g'),
+        new RegExp(value, 'gi'),
         R.prop(key, colourScheme),
         finalSvgString
       )),
