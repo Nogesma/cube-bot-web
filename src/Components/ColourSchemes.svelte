@@ -11,7 +11,8 @@
     pyraDefaultSvgString,
     megaDefaultSvgString,
     sq1DefaultSvgString,
-  } from '../data/config';
+  } from '../data/defaultSvg';
+
   import { convertSvgColourScheme } from '../tools/colourScheme';
 </script>
 
@@ -41,11 +42,9 @@
       </div>
     </div>
     <div class="col-8 text-center">
-      {@html convertSvgColourScheme(
-        '333',
-        cubeDefaultSvgString,
-        $cubeColourScheme
-      )}
+      {#await cubeDefaultSvgString then svg}
+        {@html convertSvgColourScheme('333', svg, $cubeColourScheme)}
+      {/await}
     </div>
     <div class="col-1">
       <button class="btn btn-outline-dark" on:click={cubeColourScheme.reset}

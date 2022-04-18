@@ -65,6 +65,6 @@ const getSvg = async (e, s) => {
   }
 
   if (s === 'Chargement des mélanges...') return '';
-  return convertSvgColourScheme(e, wasm.get_scramble_svg(e, s));
+  return wasm.get_scramble_svg(e, s);
 };
 export { scrambleIndex, svg, scrambleString, getSvg };

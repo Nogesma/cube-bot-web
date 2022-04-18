@@ -2,9 +2,5 @@ localhost {
   encode zstd gzip
   root * public
   file_server
-  #reverse_proxy /api/* localhost:3000
-}
-
-localhost:5000 {
-    redir https://localhost?redirect=true permanent
+  reverse_proxy /api/* localhost:3000
 }
