@@ -2,7 +2,7 @@
   "name": "cube-bot-web",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && cp node_modules/scr-to-svg/scr_to_svg_bg.wasm public/build/scr_to_svg_bg.wasm",
     "dev": "rollup -c -w",
     "start": "sirv public"
   },
