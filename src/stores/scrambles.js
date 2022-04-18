@@ -30,7 +30,7 @@ const scramblesSvg = derived(
   async ($currentEvent, set) => {
     if ($currentEvent && !includes($currentEvent, ['333', '222', 'OH'])) {
       set([]);
-      fetch(`/api/scramblesSvg/${$currentEvent}`)
+      fetch(`/api/svg/${$currentEvent}`)
         .then((res) => (res.ok ? res : set([])))
         .then((res) => res.json())
         .then((res) => set(res?.svg));
