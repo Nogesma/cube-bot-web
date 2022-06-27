@@ -1,5 +1,5 @@
-<script>
-  import { fly } from 'svelte/transition';
+<script lang="ts">
+  import { fly } from "svelte/transition";
 </script>
 
 <main class="text-center" in:fly={{ y: -150, duration: 3000 }}>

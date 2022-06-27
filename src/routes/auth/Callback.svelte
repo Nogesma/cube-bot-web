@@ -1,0 +1,37 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { querystring, replace } from "svelte-spa-router";
+
+  import axios from "axios";
+  import Loading from "../../lib/Loading.svelte";
+  import { isEmpty } from "ramda";
+  const urlParams = new URLSearchParams($querystring);
+  const code = urlParams.get("code");
+
+  if (!isEmpty(code)) {
+    onMount(() => postOauth(code));
+  }
+
+  const postOauth = async (c: string) =>
+    axios
+      .post(
+        `http://localhost:3000/api/oauth/discord/${c}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then(({ data }) => {
+        localStorage.id = data.id;
+        localStorage.username = data.username;
+        localStorage.avatar = data.avatar;
+        window.history.replaceState({}, document.title, "/");
+        replace("/");
+      })
+      .catch(() => {
+        window.history.replaceState({}, document.title, "/");
+        replace("/auth/login");
+      });
+</script>
+
+<Loading />

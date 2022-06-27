@@ -1,13 +1,13 @@
-<script>
-  import * as R from 'ramda';
-  import dayjs from 'dayjs';
-  import { events } from '../data/config';
-  import { getAvatarUrl, formatSolvesArray } from '../tools/utilities';
+<script lang="ts">
+  import * as R from "ramda";
+  import dayjs from "dayjs";
+  import { events } from "../data/config.js";
+  import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
 
-  let rankEvent = '333';
-  let dayOrMonth = 'day';
+  let rankEvent = "333";
+  let dayOrMonth = "day";
   let isDay = true;
-  let stringDate = dayjs().format('YYYY-MM-DD');
+  let stringDate = dayjs().format("YYYY-MM-DD");
 
   const fetchRankings = async () =>
     fetch(`/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`).then(
@@ -16,15 +16,24 @@
 
   const handleSubmit = async () => {
     rankings = [];
-    isDay = dayOrMonth === 'day';
-    formattedDate = isDay ? date.format('YYYY-MM-DD') : date.format('YYYY-MM');
+    isDay = dayOrMonth === "day";
+    formattedDate = isDay ? date.format("YYYY-MM-DD") : date.format("YYYY-MM");
     rankings = await fetchRankings();
   };
 
-  let rankings = [];
+  let rankings: {
+    author: string;
+    solves: string[];
+    score: string;
+    attendances: string;
+    average: string;
+    single: string;
+    avatar: string;
+    username: string;
+  }[] = [];
   $: date = dayjs(stringDate);
   $: isValidDate = date.isValid();
-  let formattedDate;
+  let formattedDate: string;
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
@@ -36,7 +45,7 @@
             class="position-relative mr-auto navbar-brand mb-0 h1"
             style="display: inline-block; direction: ltr;"
           >
-            Classement {formattedDate ? `du ${formattedDate}` : ''}</span
+            Classement {formattedDate ? `du ${formattedDate}` : ""}</span
           >
         </div>
         <div class="col">
@@ -103,7 +112,7 @@
             <td class="col">{average}</td>
             <td class="col">{single}</td>
             <td class="col word-spacing"
-              >{R.join(' ', formatSolvesArray(solves))}
+              >{R.join(" ", formatSolvesArray(solves))}
             </td>
           </tr>
         {/each}
