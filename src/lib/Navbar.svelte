@@ -17,7 +17,7 @@
 
 <div class="navbar bg-base-100">
   <div class="flex-1">
-    <a href="#/" class="btn btn-ghost normal-case text-xl">daisyUI</a>
+    <a href="#/" class="btn btn-ghost normal-case text-xl">Cube Competitions</a>
   </div>
   {#if login}
     <div class="flex-none">

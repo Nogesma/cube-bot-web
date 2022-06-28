@@ -5,7 +5,7 @@
   import { currentEvent } from "../stores/times.js";
 </script>
 
-<div class="flex flex-shrink flex-grow-0 h-1/2 justify-start content-start">
+<div class="flex basis-1/5 h-full">
   {#if includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])}
     {#await getSvg($currentEvent, $scrambleString) then s}
       {@html convertSvgColourScheme($currentEvent, s)}

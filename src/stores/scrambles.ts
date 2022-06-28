@@ -4,6 +4,7 @@ import { convertSvgColourScheme } from "../tools/colourScheme.js";
 import { includes } from "ramda";
 import init, { get_scramble_svg } from "scr-to-svg";
 import axios from "axios";
+import { push } from "svelte-spa-router";
 
 const scrambles = derived(
   currentEvent,
@@ -15,11 +16,12 @@ const scrambles = derived(
           withCredentials: true,
         })
         .then(({ data }) => set(data.scrambles))
-        .catch(() =>
+        .catch(() => {
           set([
             "Erreur lors du chargement des mélanges. Rechargez la page pour réessayer.",
-          ])
-        );
+          ]);
+          push("/auth/login");
+        });
     } else {
       set(["Chargement des mélanges..."]);
     }

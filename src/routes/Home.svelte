@@ -15,12 +15,12 @@
       })
       .then(() => dispatch("routeEvent", { login: true }))
       .catch(() => {
-        dispatch("login", { login: false });
+        dispatch("routeEvent", { login: false });
         push("/auth/login");
       });
   };
 
-  onMount(() => ping());
+  ping();
 </script>
 
 <div
@@ -28,7 +28,7 @@
 >
   {#each events as e}
     <div
-      class="card w-96 bg-base-100 shadow-xl m-5 hover:drop-shadow-lg"
+      class="card w-96 bg-base-200 shadow-xl m-5 hover:drop-shadow-lg"
       on:click={() => push(`/timer/${e}`)}
     >
       <figure>

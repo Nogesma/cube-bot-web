@@ -6,6 +6,13 @@
   )}&response_type=code&scope=guilds%20identify`;
 </script>
 
-<h1>Log in</h1>
-
-<a href={oauthUrl}>Click me!</a>
+<div class="hero min-h-screen">
+  <div class="hero-content text-center">
+    <div>
+      <h1 class="text-5xl font-bold pb-40">
+        Connectez vous avec discord pour continuer
+      </h1>
+      <a class="btn btn-active btn-primary btn-lg" href={oauthUrl}>Connexion</a>
+    </div>
+  </div>
+</div>
