@@ -8,7 +8,7 @@
 <div
   class="flex flex-grow-0 {$currentEvent === 'MEGA'
     ? 'w-4/6'
-    : 'w-1/3'} max-h-full"
+    : 'lg:w-1/3'} max-h-full"
   style="height: 56rem"
 >
   {#if includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])}

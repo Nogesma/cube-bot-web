@@ -21,6 +21,7 @@ jobs:
         env:
           VITE_REDIRECT_URI: "https://manosgr.me/"
           VITE_CLIENT_ID: "475749622384558080"
+          VITE_BACKEND_URI: ""
       - uses: actions/upload-artifact@v2
         with:
           name: build

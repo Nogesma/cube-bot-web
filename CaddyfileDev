@@ -1,4 +1,4 @@
-localhost {
+localhost 10.10.10.52 {
   encode zstd gzip
   root * dist
   file_server
