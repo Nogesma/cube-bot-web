@@ -4,6 +4,7 @@
   import { events } from "../data/config.js";
   import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
   import axios from "axios";
+  import { isEmpty } from "ramda";
 
   let rankEvent: string;
   let dayOrMonth: string;
@@ -22,13 +23,14 @@
       .catch(() => []);
 
   const handleSubmit = async () => {
-    rankings = [] as Ranks;
     isDay = dayOrMonth === "day";
     formattedDate = isDay ? date.format("YYYY-MM-DD") : date.format("YYYY-MM");
-    rankings = (await fetchRankings()) as Ranks;
+    rankings = isDay
+      ? ((await fetchRankings()) as DailyRankings[])
+      : ((await fetchRankings()) as MonthlyRankings[]);
   };
 
-  export interface DailyRankings {
+  interface DailyRankings {
     author: string;
     solves: string[];
     average: string;
@@ -36,26 +38,30 @@
     avatar: string;
     username: string;
   }
-  [];
 
-  export interface MonthlyRankings {
+  interface MonthlyRankings {
     author: string;
     score: string;
     attendances: string;
     avatar: string;
     username: string;
   }
-  [];
 
-  export type Ranks = MonthlyRankings | DailyRankings;
+  type Ranks = MonthlyRankings | DailyRankings;
 
-  let rankings: Ranks = [] as Ranks;
+  let rankings: Ranks[] = [];
   $: date = dayjs(stringDate);
   $: isValidDate = date.isValid();
   $: isValidInput =
     rankEvent !== "Event" && dayOrMonth !== "Jour/Mois" && isValidDate;
 
   let formattedDate: string;
+
+  const isDailyRankings = (r: Ranks[]): r is DailyRankings[] =>
+    !isEmpty(r) && !!(r as DailyRankings[])[0].single;
+
+  const isMonthlyRankings = (r: Ranks[]): r is MonthlyRankings[] =>
+    !isEmpty(r) && !!(r as MonthlyRankings[])[0].score;
 </script>
 
 <div class="flex flex-col container mx-auto">
@@ -100,21 +106,21 @@
   </div>
 
   <table class="table table-zebra w-full">
-    {#if isDay}
+    {#if isDailyRankings(rankings)}
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Moyenne</th>
-          <th scope="col">Meilleur</th>
-          <th scope="col">Résultats</th>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Moyenne</th>
+          <th>Meilleur</th>
+          <th>Résultats</th>
         </tr>
       </thead>
       <tbody>
         {#each rankings as { author, solves, average, single, avatar, username }, i}
           <tr>
-            <th scope="row">{i + 1}</th>
-            <td class="col">
+            <th>{i + 1}</th>
+            <td>
               <div class="flex content-center">
                 <div class="avatar pr-5">
                   <div class="w-10 rounded-full">
@@ -131,49 +137,55 @@
                 </div>
               </div>
             </td>
-            <td class="col">{average}</td>
-            <td class="col">{single}</td>
-            <td class="col word-spacing"
+            <td>{average}</td>
+            <td>{single}</td>
+            <td class="word-spacing"
               >{R.join(" ", formatSolvesArray(solves))}
             </td>
+          </tr>
+        {/each}
+      </tbody>
+    {:else if isMonthlyRankings(rankings)}
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Points</th>
+          <th>Participations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each rankings as { author, score, attendances, avatar, username }, i}
+          <tr>
+            <th>{i + 1}</th>
+            <td>
+              <div class="flex content-center">
+                <div class="avatar pr-5">
+                  <div class="w-10 rounded-full">
+                    <img
+                      src={getAvatarUrl(String(avatar), author)}
+                      alt="discord avatar"
+                      height="25px"
+                      class="rounded-circle"
+                    />
+                  </div>
+                </div>
+                <div class="flex place-items-center">
+                  {username}
+                </div>
+              </div>
+            </td>
+            <td>{score}</td>
+            <td>{attendances}</td>
           </tr>
         {/each}
       </tbody>
     {:else}
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Points</th>
-          <th scope="col">Participations</th>
+          <th class="text-center">Classement vide</th>
         </tr>
       </thead>
-      <tbody>
-        {#each rankings as { author, score, attendances, avatar, username }, i}
-          <tr>
-            <th scope="row">{i + 1}</th>
-            <td class="col">
-              <div class="flex content-center">
-                <div class="avatar pr-5">
-                  <div class="w-10 rounded-full">
-                    <img
-                      src={getAvatarUrl(String(avatar), author)}
-                      alt="discord avatar"
-                      height="25px"
-                      class="rounded-circle"
-                    />
-                  </div>
-                </div>
-                <div class="flex place-items-center">
-                  {username}
-                </div>
-              </div>
-            </td>
-            <td class="col">{score}</td>
-            <td class="col">{attendances}</td>
-          </tr>
-        {/each}
-      </tbody>
     {/if}
   </table>
 </div>

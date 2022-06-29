@@ -89,7 +89,6 @@ const megaDefaultColourScheme: MegaColourScheme = {
 };
 
 export {
-  pages,
   events,
   cubeDefaultColourScheme,
   pyraDefaultColourScheme,
