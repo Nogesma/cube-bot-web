@@ -2,8 +2,6 @@ node_modules/
 .DS_Store
 .idea/
 
-public/build
-
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -11,3 +9,6 @@ public/build
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+dist
+.env
