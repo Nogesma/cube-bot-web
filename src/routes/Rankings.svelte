@@ -126,13 +126,19 @@
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
-              <img
-                src={getAvatarUrl(String(avatar), author)}
-                alt="discord avatar"
-                height="25px"
-                class="rounded-circle"
-              />
-              {username}
+              <div class="avatar">
+                <div class="w-10 rounded-full">
+                  <img
+                    src={getAvatarUrl(String(avatar), author)}
+                    alt="discord avatar"
+                    height="25px"
+                    class="rounded-circle"
+                  />
+                </div>
+              </div>
+              <div class="inline-block align-middle">
+                {username}
+              </div>
             </td>
             <td class="col">{score}</td>
             <td class="col">{attendances}</td>
