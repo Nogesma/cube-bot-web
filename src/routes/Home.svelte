@@ -9,7 +9,7 @@
 
   const ping = async () => {
     await axios
-      .get("/api/ping", {
+      .get(`${import.meta.env.VITE_BACKEND_URI}/api/ping`, {
         withCredentials: true,
       })
       .then(() => ($login = true))

@@ -13,9 +13,12 @@ const scrambles = derived(
     if ($currentEvent) {
       set(["Chargement des mélanges..."]);
       axios
-        .get(`/api/scrambles/${$currentEvent}`, {
-          withCredentials: true,
-        })
+        .get(
+          `${import.meta.env.VITE_BACKEND_URI}/api/scrambles/${$currentEvent}`,
+          {
+            withCredentials: true,
+          }
+        )
         .then(({ data }) => set(data.scrambles))
         .catch(() => {
           set([
@@ -38,7 +41,7 @@ const scramblesSvg: Readable<string[]> = derived(
       !includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])
     ) {
       axios
-        .get(`/api/svg/${$currentEvent}`, {
+        .get(`${import.meta.env.VITE_BACKEND_URI}/api/svg/${$currentEvent}`, {
           withCredentials: true,
         })
         .then(({ data }) => set(data.svg))

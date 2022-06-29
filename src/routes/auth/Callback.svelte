@@ -15,7 +15,7 @@
   const postOauth = async (c: string) =>
     axios
       .post(
-        `/api/oauth/discord/${c}`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/oauth/discord/${c}`,
         {},
         {
           withCredentials: true,

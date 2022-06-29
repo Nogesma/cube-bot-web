@@ -45,7 +45,11 @@
   );
 </script>
 
-<div class="flex flex-row justify-evenly flex-wrap md:flex-nowrap">
+<div
+  class="flex flex-row justify-evenly flex-wrap {$currentEvent === 'MEGA'
+    ? ''
+    : 'lg:flex-nowrap'}"
+>
   <div class="flex flex-col pl-2">
     <TimeList />
   </div>

@@ -4,6 +4,7 @@
 interface ImportMetaEnv {
   readonly VITE_REDIRECT_URI: string;
   readonly VITE_CLIENT_ID: string;
+  readonly VITE_BACKEND_URI: string;
 }
 
 interface ImportMeta {

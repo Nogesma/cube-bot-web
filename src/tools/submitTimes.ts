@@ -10,7 +10,7 @@ const submitEvent = async (timesArray: {
 
   return axios
     .post(
-      `/api/times`,
+      `${import.meta.env.VITE_BACKEND_URI}/api/times`,
       { event, solves: times },
       {
         withCredentials: true,

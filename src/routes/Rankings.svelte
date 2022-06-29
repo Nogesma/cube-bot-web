@@ -10,9 +10,11 @@
   let stringDate = dayjs().format("YYYY-MM-DD");
 
   const fetchRankings = async () =>
-    fetch(`/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`).then(
-      (res) => res.json()
-    );
+    fetch(
+      `${
+        import.meta.env.VITE_BACKEND_URI
+      }/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`
+    ).then((res) => res.json());
 
   const handleSubmit = async () => {
     rankings = [];
