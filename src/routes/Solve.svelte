@@ -45,7 +45,7 @@
   );
 </script>
 
-<div class="flex flex-row justify-evenly flex-wrap">
+<div class="flex flex-row justify-evenly flex-wrap md:flex-nowrap">
   <div class="flex flex-col pl-2">
     <TimeList />
   </div>
@@ -64,7 +64,9 @@
       </div>
     </div>
   {:else}
-    <div class="flex-col flex-auto flex items-center justify-center">
+    <div
+      class="flex-col flex-grow flex-shrink-0 flex items-center justify-center basis-1/3"
+    >
       <Scrambles />
       <Timer />
     </div>

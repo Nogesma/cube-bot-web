@@ -32,29 +32,29 @@ const scrambles = derived(
 
 const scramblesSvg: Readable<string[]> = derived(
   currentEvent,
-  ($currentEvent) => {
+  ($currentEvent, set) => {
     if (
       $currentEvent &&
       !includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])
     ) {
-      return axios
+      axios
         .get(`/api/svg/${$currentEvent}`, {
           withCredentials: true,
         })
-        .then(({ data }) => data.svg)
-        .catch(() => []);
+        .then(({ data }) => set(data.svg))
+        .catch(() => set([]));
     }
-    return [];
+    set([]);
   },
   []
-) as Readable<string[]>;
+);
 
 const scrambleIndex = writable(0);
 
 const svg: Readable<string> = derived(
   [scramblesSvg, scrambleIndex, currentEvent],
   ([$scramblesSvg, $scrambleIndex, $currentEvent]) =>
-    convertSvgColourScheme($currentEvent, $scramblesSvg[$scrambleIndex] ?? "")
+    convertSvgColourScheme($currentEvent, $scramblesSvg[$scrambleIndex])
 );
 
 const scrambleString = derived(
@@ -70,4 +70,4 @@ const getSvg = (e: string, s: string) => {
   return get_scramble_svg(e, s);
 };
 
-export { scrambleIndex, svg, scrambleString, getSvg };
+export { scrambleIndex, svg, scrambleString, getSvg, scramblesSvg };

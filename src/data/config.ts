@@ -1,4 +1,38 @@
-import type { ColourScheme } from "../tools/colourScheme";
+export interface CubeColourScheme {
+  U: string;
+  R: string;
+  L: string;
+  D: string;
+  F: string;
+  B: string;
+}
+
+export interface PyraColourScheme {
+  R: string;
+  L: string;
+  D: string;
+  F: string;
+}
+
+export interface MegaColourScheme {
+  U: string;
+  R: string;
+  L: string;
+  D: string;
+  F: string;
+  B: string;
+  Ubr: string;
+  Ubl: string;
+  Fr: string;
+  Fl: string;
+  Br: string;
+  Bl: string;
+}
+
+export type ColourScheme =
+  | CubeColourScheme
+  | PyraColourScheme
+  | MegaColourScheme;
 
 const pages = {
   Dashboard: "Dashboard",
@@ -21,7 +55,7 @@ const events = [
   "SKEWB",
 ];
 
-const cubeDefaultColourScheme: ColourScheme = {
+const cubeDefaultColourScheme: CubeColourScheme = {
   U: "#ffffff",
   R: "#ff0000",
   F: "#00ff00",
@@ -30,14 +64,14 @@ const cubeDefaultColourScheme: ColourScheme = {
   D: "#ffff00",
 };
 
-const pyraDefaultColourScheme: ColourScheme = {
+const pyraDefaultColourScheme: PyraColourScheme = {
   R: "#ff0000",
   F: "#00ff00",
   L: "#0000ff",
   D: "#ffff00",
 };
 
-const sq1DefaultColourScheme: ColourScheme = {
+const sq1DefaultColourScheme: CubeColourScheme = {
   U: "#ffff00",
   R: "#00ff00",
   F: "#ff0000",
@@ -46,7 +80,7 @@ const sq1DefaultColourScheme: ColourScheme = {
   D: "#ffffff",
 };
 
-const megaDefaultColourScheme: ColourScheme = {
+const megaDefaultColourScheme: MegaColourScheme = {
   U: "#ffffff",
   R: "#dd0000",
   F: "#006600",

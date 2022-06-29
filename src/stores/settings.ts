@@ -2,12 +2,12 @@ import { writable } from "svelte/store";
 import * as R from "ramda";
 
 import {
+  type ColourScheme,
   cubeDefaultColourScheme,
   megaDefaultColourScheme,
   pyraDefaultColourScheme,
   sq1DefaultColourScheme,
 } from "../data/config";
-import type { ColourScheme } from "../tools/colourScheme";
 
 const createColourScheme = (colourScheme: ColourScheme, itemName: string) => {
   const { subscribe, set } = writable(

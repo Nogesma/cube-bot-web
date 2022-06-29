@@ -5,6 +5,7 @@ import {
   pyraDefaultColourScheme,
   megaDefaultColourScheme,
   sq1DefaultColourScheme,
+  type ColourScheme,
 } from "../data/config";
 import {
   cubeColourScheme,
@@ -13,32 +14,18 @@ import {
   sq1ColourScheme,
 } from "../stores/settings";
 
-export interface ColourScheme {
-  U?: string;
-  R?: string;
-  L?: string;
-  D?: string;
-  F?: string;
-  B?: string;
-  Ubr?: string;
-  Ubl?: string;
-  Fr?: string;
-  Fl?: string;
-  Br?: string;
-  Bl?: string;
-}
-
 const applyColourScheme = (
-  svgString: string,
+  svgString: string | undefined,
   defaultColourScheme: ColourScheme,
   colourScheme: ColourScheme
 ) => {
+  if (!svgString) return "";
   let finalSvgString = svgString;
   R.forEachObjIndexed(
     (value, key) =>
       (finalSvgString = R.replace(
-        new RegExp(value ?? "", "gi"),
-        R.prop(key, colourScheme) ?? "",
+        new RegExp(value, "gi"),
+        R.prop(key, colourScheme),
         finalSvgString
       )),
     defaultColourScheme
@@ -48,6 +35,7 @@ const applyColourScheme = (
 
 const convertCube = (_: string, svgString: string) =>
   applyColourScheme(svgString, cubeDefaultColourScheme, get(cubeColourScheme));
+
 const convertPyra = (_: string, svgString: string) =>
   applyColourScheme(svgString, pyraDefaultColourScheme, get(pyraColourScheme));
 
