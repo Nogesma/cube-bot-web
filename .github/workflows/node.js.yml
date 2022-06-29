@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: build
-          path: public
+          path: dist
 
   push:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
-          path: public
+          path: dist
           name: build
       - name: Docker Build & Push Action
         uses: mr-smithers-excellent/docker-build-push@v5.5
