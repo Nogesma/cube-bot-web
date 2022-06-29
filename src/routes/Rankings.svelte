@@ -139,7 +139,7 @@
             </td>
             <td>{average}</td>
             <td>{single}</td>
-            <td class="word-spacing"
+            <td style="word-spacing: 30px"
               >{R.join(" ", formatSolvesArray(solves))}
             </td>
           </tr>
@@ -189,9 +189,3 @@
     {/if}
   </table>
 </div>
-
-<style>
-  .word-spacing {
-    word-spacing: 30px;
-  }
-</style>

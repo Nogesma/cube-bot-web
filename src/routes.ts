@@ -1,17 +1,23 @@
+import { wrap } from "svelte-spa-router/wrap";
 import Home from "./routes/Home.svelte";
-import NotFound from "./routes/404.svelte";
-import Login from "./routes/auth/Login.svelte";
-import Callback from "./routes/auth/Callback.svelte";
-import Settings from "./routes/Settings.svelte";
 import Solve from "./routes/Solve.svelte";
-import Rankings from "./routes/Rankings.svelte";
 
 export default {
   "/": Home,
   "/timer/:event": Solve,
-  "/settings": Settings,
-  "/rankings": Rankings,
-  "/auth/login": Login,
-  "/auth/oauth2callback": Callback,
-  "*": NotFound,
+  "/settings": wrap({
+    asyncComponent: () => import("./routes/Settings.svelte"),
+  }),
+  "/rankings": wrap({
+    asyncComponent: () => import("./routes/Rankings.svelte"),
+  }),
+  "/auth/login": wrap({
+    asyncComponent: () => import("./routes/auth/Login.svelte"),
+  }),
+  "/auth/oauth2callback": wrap({
+    asyncComponent: () => import("./routes/auth/Callback.svelte"),
+  }),
+  "*": wrap({
+    asyncComponent: () => import("./routes/404.svelte"),
+  }),
 };
