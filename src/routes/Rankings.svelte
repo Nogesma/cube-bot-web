@@ -3,6 +3,7 @@
   import dayjs from "dayjs";
   import { events } from "../data/config.js";
   import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
+  import axios from "axios";
 
   let rankEvent: string;
   let dayOrMonth: string;
@@ -10,29 +11,45 @@
   let stringDate = dayjs().format("YYYY-MM-DD");
 
   const fetchRankings = async () =>
-    fetch(
-      `${
-        import.meta.env.VITE_BACKEND_URI
-      }/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`
-    ).then((res) => res.json());
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_BACKEND_URI
+        }/api/rankings/${dayOrMonth}/${rankEvent}/${formattedDate}/`,
+        { withCredentials: true }
+      )
+      .then(({ data }) => data)
+      .catch(() => []);
 
   const handleSubmit = async () => {
-    rankings = [];
+    rankings = [] as Ranks;
     isDay = dayOrMonth === "day";
     formattedDate = isDay ? date.format("YYYY-MM-DD") : date.format("YYYY-MM");
-    rankings = await fetchRankings();
+    rankings = (await fetchRankings()) as Ranks;
   };
 
-  let rankings: {
+  export interface DailyRankings {
     author: string;
     solves: string[];
-    score: string;
-    attendances: string;
     average: string;
     single: string;
     avatar: string;
     username: string;
-  }[] = [];
+  }
+  [];
+
+  export interface MonthlyRankings {
+    author: string;
+    score: string;
+    attendances: string;
+    avatar: string;
+    username: string;
+  }
+  [];
+
+  export type Ranks = MonthlyRankings | DailyRankings;
+
+  let rankings: Ranks = [] as Ranks;
   $: date = dayjs(stringDate);
   $: isValidDate = date.isValid();
   $: isValidInput =
@@ -98,13 +115,21 @@
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
-              <img
-                src={getAvatarUrl(String(avatar), author)}
-                alt="discord avatar"
-                height="25px"
-                class="rounded-circle"
-              />
-              {username}
+              <div class="flex content-center">
+                <div class="avatar pr-5">
+                  <div class="w-10 rounded-full">
+                    <img
+                      src={getAvatarUrl(String(avatar), author)}
+                      alt="discord avatar"
+                      height="25px"
+                      class="rounded-circle"
+                    />
+                  </div>
+                </div>
+                <div class="flex place-items-center">
+                  {username}
+                </div>
+              </div>
             </td>
             <td class="col">{average}</td>
             <td class="col">{single}</td>
@@ -128,18 +153,20 @@
           <tr>
             <th scope="row">{i + 1}</th>
             <td class="col">
-              <div class="avatar">
-                <div class="w-10 rounded-full">
-                  <img
-                    src={getAvatarUrl(String(avatar), author)}
-                    alt="discord avatar"
-                    height="25px"
-                    class="rounded-circle"
-                  />
+              <div class="flex content-center">
+                <div class="avatar pr-5">
+                  <div class="w-10 rounded-full">
+                    <img
+                      src={getAvatarUrl(String(avatar), author)}
+                      alt="discord avatar"
+                      height="25px"
+                      class="rounded-circle"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="inline-block align-middle">
-                {username}
+                <div class="flex place-items-center">
+                  {username}
+                </div>
               </div>
             </td>
             <td class="col">{score}</td>

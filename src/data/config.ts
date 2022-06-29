@@ -34,13 +34,6 @@ export type ColourScheme =
   | PyraColourScheme
   | MegaColourScheme;
 
-const pages = {
-  Dashboard: "Dashboard",
-  Timer: "Timer",
-  Settings: "Settings",
-  Rankings: "Rankings",
-};
-
 const events = [
   "333",
   "222",

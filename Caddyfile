@@ -1,5 +1,7 @@
 manosgr.me {
-  encode zstd gzip
-  file_server
-  reverse_proxy /api/* node:3000
+	encode gzip
+	file_server {
+		precompressed br gzip
+	}
+	reverse_proxy /api/* node:3000
 }

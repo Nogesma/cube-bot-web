@@ -1,6 +1,8 @@
-localhost 10.10.10.52 {
-  encode zstd gzip
-  root * dist
-  file_server
-  reverse_proxy /api/* localhost:3000
+localhost {
+	encode gzip
+	root * dist
+	file_server {
+		precompressed br gzip
+	}
+	reverse_proxy /api/* localhost:3000
 }
