@@ -1,5 +1,7 @@
 import * as R from "ramda";
 import { get } from "svelte/store";
+import DOMPurify from "dompurify";
+
 import {
   cubeDefaultColourScheme,
   pyraDefaultColourScheme,
@@ -45,11 +47,14 @@ const convertMega = (_: string, svgString: string) =>
 const convertSq1 = (_: string, svgString: string) =>
   applyColourScheme(svgString, sq1DefaultColourScheme, get(sq1ColourScheme));
 
-const convertSvgColourScheme = R.cond<[string, string], string>([
-  [R.equals("PYRA"), convertPyra],
-  [R.equals("MEGA"), convertMega],
-  [R.equals("SQ1"), convertSq1],
-  [R.T, convertCube],
-]);
+const convertSvgColourScheme = R.pipe(
+  R.cond<[string, string], string>([
+    [R.equals("PYRA"), convertPyra],
+    [R.equals("MEGA"), convertMega],
+    [R.equals("SQ1"), convertSq1],
+    [R.T, convertCube],
+  ]),
+  DOMPurify.sanitize
+);
 
 export { convertSvgColourScheme };

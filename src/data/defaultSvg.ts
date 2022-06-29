@@ -6,17 +6,17 @@ import axios from "axios";
 
 const cubeDefaultSvgString = getSvg("333", "");
 
-const pyraDefaultSvgString = await axios
+const pyraDefaultSvgString: string = await axios
   .get(pyra)
   .then(({ data }) => data)
   .catch(() => "");
 
-const megaDefaultSvgString = await axios
+const megaDefaultSvgString: string = await axios
   .get(mega)
   .then(({ data }) => data)
   .catch(() => "");
 
-const sq1DefaultSvgString = await axios
+const sq1DefaultSvgString: string = await axios
   .get(sq1)
   .then(({ data }) => data)
   .catch(() => "");

@@ -20,17 +20,25 @@
   let megaSvg: string;
   let sq1Svg: string;
 
-  $: cubeColourScheme &&
-    (cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString));
+  $: {
+    $cubeColourScheme;
+    cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString);
+  }
 
-  $: pyraColourScheme &&
-    (pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString));
+  $: {
+    $pyraColourScheme;
+    pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString);
+  }
 
-  $: megaColourScheme &&
-    (megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString));
+  $: {
+    $megaColourScheme;
+    megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString);
+  }
 
-  $: sq1ColourScheme &&
-    (sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString));
+  $: {
+    $sq1ColourScheme;
+    sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString);
+  }
 </script>
 
 <div class="text-5xl">Colour Schemes</div>
@@ -45,11 +53,7 @@
           <label class="input-group-text">
             <input type="color" bind:value={$cubeColourScheme[key]} />
           </label>
-          <input
-            type="text"
-            class="form-control"
-            bind:value={$cubeColourScheme[key]}
-          />
+          <input type="text" bind:value={$cubeColourScheme[key]} />
         </div>
       {/each}
       <button class="btn" on:click={cubeColourScheme.reset}
@@ -69,11 +73,7 @@
           <span class="input-group-text"
             ><input type="color" bind:value={$pyraColourScheme[key]} /></span
           >
-          <input
-            type="text"
-            class="form-control"
-            bind:value={$pyraColourScheme[key]}
-          />
+          <input type="text" bind:value={$pyraColourScheme[key]} />
         </div>
       {/each}
       <button class="btn" on:click={pyraColourScheme.reset}
@@ -93,11 +93,7 @@
           <span class="input-group-text"
             ><input type="color" bind:value={$megaColourScheme[key]} /></span
           >
-          <input
-            type="text"
-            class="form-control"
-            bind:value={$megaColourScheme[key]}
-          />
+          <input type="text" bind:value={$megaColourScheme[key]} />
         </div>
       {/each}
       <button class="btn" on:click={megaColourScheme.reset}
@@ -117,11 +113,7 @@
           <span class="input-group-text"
             ><input type="color" bind:value={$sq1ColourScheme[key]} /></span
           >
-          <input
-            type="text"
-            class="form-control"
-            bind:value={$sq1ColourScheme[key]}
-          />
+          <input type="text" bind:value={$sq1ColourScheme[key]} />
         </div>
       {/each}
       <button class="btn" on:click={sq1ColourScheme.reset}
