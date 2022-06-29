@@ -21,20 +21,26 @@ import {
   sum,
   length,
   subtract,
+  toString,
 } from "ramda";
 
-const applyPenality = cond([
+const applyPenality = cond<[number[]], number>([
   [pipe(last, equals(2)), always(Infinity)],
   [pipe(last, equals(1)), pipe(head, add(2))],
   [pipe(last, equals(0)), head],
 ]);
 
-const parseTimesArray = map(applyPenality);
+const parseTimesArray = map<number[], number>(applyPenality);
 
-const msToSeconds = pipe(String, dropLast<string>(1), divide(__, 100));
+const msToSeconds = pipe<number[], string, string, number, number>(
+  toString,
+  dropLast(1),
+  Number,
+  divide(__, 100)
+);
 
 const secondsToTime = (time: number): string => {
-  if (time === Infinity) {
+  if (time === Infinity || time == -Infinity) {
     return "DNF";
   }
 
@@ -62,17 +68,17 @@ const timeToSeconds = (time: string): number => {
   );
 };
 
-const averageOfFiveCalculator = ifElse(
+const averageOfFiveCalculator = ifElse<[number[]], number, number>(
   pipe(filter(lt(0)), length, equals(5)),
   pipe(
     sort(subtract),
-    slice(1, -1),
+    (x) => slice(1, -1, x),
     sum,
     divide(__, 3),
     (x) => x.toFixed(2),
     Number
   ),
-  always(-Infinity)
+  always(Infinity)
 );
 
 export {

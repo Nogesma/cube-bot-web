@@ -7,12 +7,8 @@
 
   if (new URLSearchParams(window.location.search).has("code"))
     push("/auth/oauth2callback" + window.location.search);
-
-  let login = false;
-
-  const handleLogin = (event) => (login = event.detail.login);
 </script>
 
-<Navbar {login} />
+<Navbar />
 
-<Router {routes} on:routeEvent={handleLogin} />
+<Router {routes} />

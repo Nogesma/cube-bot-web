@@ -1,4 +1,5 @@
 import { derived, writable } from "svelte/store";
+import type { Readable } from "svelte/store";
 import { currentEvent } from "./times";
 import { convertSvgColourScheme } from "../tools/colourScheme.js";
 import { includes } from "ramda";
@@ -12,7 +13,7 @@ const scrambles = derived(
     if ($currentEvent) {
       set(["Chargement des mélanges..."]);
       axios
-        .get(`http://localhost:3000/api/scrambles/${$currentEvent}`, {
+        .get(`/api/scrambles/${$currentEvent}`, {
           withCredentials: true,
         })
         .then(({ data }) => set(data.scrambles))
@@ -29,33 +30,31 @@ const scrambles = derived(
   ["Chargement des mélanges..."]
 );
 
-const scramblesSvg = derived(
+const scramblesSvg: Readable<string[]> = derived(
   currentEvent,
-  async ($currentEvent, set) => {
+  ($currentEvent) => {
     if (
       $currentEvent &&
       !includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])
     ) {
-      set([]);
-      axios
-        .get(`http://localhost:3000/api/svg/${$currentEvent}`, {
+      return axios
+        .get(`/api/svg/${$currentEvent}`, {
           withCredentials: true,
         })
-        .then(({ data }) => set(data.svg))
-        .catch(() => set([]));
-    } else {
-      set([]);
+        .then(({ data }) => data.svg)
+        .catch(() => []);
     }
+    return [];
   },
   []
-);
+) as Readable<string[]>;
 
 const scrambleIndex = writable(0);
 
-const svg = derived(
+const svg: Readable<string> = derived(
   [scramblesSvg, scrambleIndex, currentEvent],
-  ([$scrambles, $scrambleIndex, $currentEvent]) =>
-    convertSvgColourScheme($currentEvent, $scrambles[$scrambleIndex] ?? "")
+  ([$scramblesSvg, $scrambleIndex, $currentEvent]) =>
+    convertSvgColourScheme($currentEvent, $scramblesSvg[$scrambleIndex] ?? "")
 );
 
 const scrambleString = derived(
@@ -63,14 +62,12 @@ const scrambleString = derived(
   ([$scrambles, $scrambleIndex]) => $scrambles[$scrambleIndex] ?? ""
 );
 
-const getSvg = async (e: string, s: string) => {
-  if (typeof getSvg.is_init === "undefined") {
-    await init();
-    getSvg.is_init = 0;
-  }
+await init();
 
+const getSvg = (e: string, s: string) => {
   if (s === "Chargement des mélanges...") return "";
 
   return get_scramble_svg(e, s);
 };
+
 export { scrambleIndex, svg, scrambleString, getSvg };

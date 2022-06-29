@@ -14,6 +14,23 @@
     pyraDefaultSvgString,
     sq1DefaultSvgString,
   } from "../data/defaultSvg.js";
+
+  let cubeSvg: string;
+  let pyraSvg: string;
+  let megaSvg: string;
+  let sq1Svg: string;
+
+  $: cubeColourScheme &&
+    (cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString));
+
+  $: pyraColourScheme &&
+    (pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString));
+
+  $: megaColourScheme &&
+    (megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString));
+
+  $: sq1ColourScheme &&
+    (sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString));
 </script>
 
 <div class="text-5xl">Colour Schemes</div>
@@ -40,9 +57,7 @@
       </button>
     </div>
     <div class="basis-1/5">
-      {#await cubeDefaultSvgString then svg}
-        {@html convertSvgColourScheme("333", svg, $cubeColourScheme)}
-      {/await}
+      {@html cubeSvg}
     </div>
   </div>
   <h2 id="pyra">Pyraminx:</h2>
@@ -66,11 +81,7 @@
       </button>
     </div>
     <div class="basis-1/6 basis">
-      {@html convertSvgColourScheme(
-        "PYRA",
-        pyraDefaultSvgString,
-        $pyraColourScheme
-      )}
+      {@html pyraSvg}
     </div>
   </div>
   <h2 id="mega">Megaminx:</h2>
@@ -94,11 +105,7 @@
       </button>
     </div>
     <div class="basis-1/3">
-      {@html convertSvgColourScheme(
-        "MEGA",
-        megaDefaultSvgString,
-        $megaColourScheme
-      )}
+      {@html megaSvg}
     </div>
   </div>
   <h2 id="sq1">Square-1:</h2>
@@ -122,11 +129,7 @@
       </button>
     </div>
     <div class="basis-1/12">
-      {@html convertSvgColourScheme(
-        "SQ1",
-        sq1DefaultSvgString,
-        $sq1ColourScheme
-      )}
+      {@html sq1Svg}
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@ const submitEvent = async (timesArray: {
 
   return axios
     .post(
-      `http://localhost:3000/api/times`,
+      `/api/times`,
       { event, solves: times },
       {
         withCredentials: true,

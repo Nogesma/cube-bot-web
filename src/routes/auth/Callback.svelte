@@ -5,17 +5,17 @@
   import axios from "axios";
   import Loading from "../../lib/Loading.svelte";
   import { isEmpty } from "ramda";
-  const urlParams = new URLSearchParams($querystring);
+  const urlParams = new URLSearchParams($querystring ?? "");
   const code = urlParams.get("code");
 
-  if (!isEmpty(code)) {
+  if (code && !isEmpty(code)) {
     onMount(() => postOauth(code));
   }
 
   const postOauth = async (c: string) =>
     axios
       .post(
-        `http://localhost:3000/api/oauth/discord/${c}`,
+        `/api/oauth/discord/${c}`,
         {},
         {
           withCredentials: true,

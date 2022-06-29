@@ -7,10 +7,13 @@ import {
   pyraDefaultColourScheme,
   sq1DefaultColourScheme,
 } from "../data/config";
+import type { ColourScheme } from "../tools/colourScheme";
 
-const createColourScheme = (colourScheme, itemName: string) => {
+const createColourScheme = (colourScheme: ColourScheme, itemName: string) => {
   const { subscribe, set } = writable(
-    JSON.parse(localStorage.getItem(itemName)) ?? R.clone(colourScheme)
+    localStorage[itemName]
+      ? JSON.parse(localStorage[itemName])
+      : R.clone(colourScheme)
   );
 
   return {
@@ -56,6 +59,8 @@ const runningTimerText = writable(
   localStorage.getItem("runningTimerText") ?? "⏱"
 );
 
+const login = writable(false);
+
 cubeColourScheme.subscribe((val) =>
   localStorage.setItem("cubeColourScheme", JSON.stringify(val))
 );
@@ -93,4 +98,5 @@ export {
   useInspection,
   timerUpdate,
   runningTimerText,
+  login,
 };

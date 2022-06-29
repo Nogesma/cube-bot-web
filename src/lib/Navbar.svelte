@@ -1,11 +1,12 @@
 <script lang="ts">
   import Cookies from "js-cookie";
   import { getAvatarUrl } from "../tools/utilities.js";
-
-  export let login: boolean = false;
+  import { login } from "../stores/settings";
   import { push } from "svelte-spa-router";
 
-  $: avatarUrl = login && getAvatarUrl(localStorage.avatar, localStorage.id);
+  let avatarUrl: string;
+
+  $: $login && (avatarUrl = getAvatarUrl(localStorage.avatar, localStorage.id));
 
   const logout = () => {
     localStorage.clear();
@@ -19,7 +20,11 @@
   <div class="flex-1">
     <a href="#/" class="btn btn-ghost normal-case text-xl">Cube Competitions</a>
   </div>
-  {#if login}
+  <div class="flex">
+    <a href="#/rankings" class="btn btn-ghost normal-case text-xl">Classement</a
+    >
+  </div>
+  {#if $login}
     <div class="flex-none">
       <div class="dropdown dropdown-end">
         <div tabindex="0" class="btn btn-ghost btn-circle avatar">

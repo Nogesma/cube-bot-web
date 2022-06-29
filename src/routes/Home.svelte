@@ -4,39 +4,42 @@
   import { events } from "../data/config.js";
   import axios from "axios";
   import { onMount } from "svelte";
-  import { createEventDispatcher } from "svelte";
-
-  const dispatch = createEventDispatcher();
+  import Loading from "../lib/Loading.svelte";
+  import { login } from "../stores/settings";
 
   const ping = async () => {
     await axios
-      .get("http://localhost:3000/api/ping", {
+      .get("/api/ping", {
         withCredentials: true,
       })
-      .then(() => dispatch("routeEvent", { login: true }))
+      .then(() => ($login = true))
       .catch(() => {
-        dispatch("routeEvent", { login: false });
+        $login = false;
         push("/auth/login");
       });
   };
 
-  ping();
+  onMount(ping);
 </script>
 
-<div
-  class="flex flex-row flex-wrap justify-around content-evenly container mx-auto"
->
-  {#each events as e}
-    <div
-      class="card w-96 bg-base-200 shadow-xl m-5 hover:drop-shadow-lg"
-      on:click={() => push(`/timer/${e}`)}
-    >
-      <figure>
-        <span class="cubing-icon cubing-icon-5x event-{e}" />
-      </figure>
-      <div class="card-body">
-        <h2 class="card-title justify-center">{e}</h2>
+{#if !$login}
+  <Loading />
+{:else}
+  <div
+    class="flex flex-row flex-wrap justify-around content-evenly container mx-auto"
+  >
+    {#each events as e}
+      <div
+        class="card w-96 bg-base-200 shadow-xl m-5 hover:drop-shadow-lg"
+        on:click={() => push(`/timer/${e}`)}
+      >
+        <figure>
+          <span class="cubing-icon cubing-icon-5x event-{e}" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title justify-center">{e}</h2>
+        </div>
       </div>
-    </div>
-  {/each}
-</div>
+    {/each}
+  </div>
+{/if}

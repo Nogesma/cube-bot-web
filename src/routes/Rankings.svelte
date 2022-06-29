@@ -4,8 +4,8 @@
   import { events } from "../data/config.js";
   import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
 
-  let rankEvent = "333";
-  let dayOrMonth = "day";
+  let rankEvent: string;
+  let dayOrMonth: string;
   let isDay = true;
   let stringDate = dayjs().format("YYYY-MM-DD");
 
@@ -33,59 +33,54 @@
   }[] = [];
   $: date = dayjs(stringDate);
   $: isValidDate = date.isValid();
+  $: isValidInput =
+    rankEvent !== "Event" && dayOrMonth !== "Jour/Mois" && isValidDate;
+
   let formattedDate: string;
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
-  <div class="container-xxl d-flex align-items-md-center">
-    <div class="col">
-      <div class="row mt-3 mb-3">
-        <div class="col">
-          <span
-            class="position-relative mr-auto navbar-brand mb-0 h1"
-            style="display: inline-block; direction: ltr;"
-          >
-            Classement {formattedDate ? `du ${formattedDate}` : ""}</span
-          >
-        </div>
-        <div class="col">
-          <select bind:value={dayOrMonth} class="form-select">
-            <option selected value="day">Jour</option>
-            <option value="month">Mois</option>
-          </select>
-        </div>
-        <div class="col">
-          <select bind:value={rankEvent} class="form-select">
-            <option>Event</option>
-            {#each events as e}
-              <option value={e}>{e}</option>
-            {/each}
-          </select>
-        </div>
-        <div class="col">
-          <div class="input-group">
-            <span class="input-group-text">Date</span>
-            <input
-              type="date"
-              id="dateInput"
-              class="form-control"
-              bind:value={stringDate}
-              required
-            />
-          </div>
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-dark" disabled={!isValidDate}
-            >Valider
-          </button>
-        </div>
-      </div>
-    </div>
+<div class="flex flex-col container mx-auto">
+  <div class="flex flex-auto text-5xl justify-center">
+    <span> Classement {formattedDate ? `du ${formattedDate}` : ""}</span>
   </div>
-</form>
+  <div class="flex py-10">
+    <div class="flex flex-auto" />
+    <div class="flex justify-center px-4">
+      <select bind:value={dayOrMonth} class="select select-bordered">
+        <option selected disabled>Jour/Mois</option>
+        <option value="day">Jour</option>
+        <option value="month">Mois</option>
+      </select>
+    </div>
+    <div class="flex justify-center px-4">
+      <select bind:value={rankEvent} class="select select-bordered">
+        <option selected disabled>Event</option>
+        {#each events as e}
+          <option value={e}>{e}</option>
+        {/each}
+      </select>
+    </div>
+    <div class="flex px-4">
+      <label class="input-group justify-center">
+        <span>Date</span>
+        <input
+          type="date"
+          id="dateInput"
+          class="input input-bordered"
+          bind:value={stringDate}
+          required
+        />
+      </label>
+    </div>
+    <div class="flex justify-center px-4">
+      <button on:click={handleSubmit} class="btn" disabled={!isValidInput}
+        >Valider
+      </button>
+    </div>
+    <div class="flex flex-auto" />
+  </div>
 
-<div class="container-xxl my-md-4 bd-layout">
-  <table class="table table-hover caption-top">
+  <table class="table table-zebra w-full">
     {#if isDay}
       <thead>
         <tr>

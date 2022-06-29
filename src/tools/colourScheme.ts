@@ -13,17 +13,32 @@ import {
   sq1ColourScheme,
 } from "../stores/settings";
 
+export interface ColourScheme {
+  U?: string;
+  R?: string;
+  L?: string;
+  D?: string;
+  F?: string;
+  B?: string;
+  Ubr?: string;
+  Ubl?: string;
+  Fr?: string;
+  Fl?: string;
+  Br?: string;
+  Bl?: string;
+}
+
 const applyColourScheme = (
   svgString: string,
-  defaultColourScheme,
-  colourScheme
+  defaultColourScheme: ColourScheme,
+  colourScheme: ColourScheme
 ) => {
   let finalSvgString = svgString;
   R.forEachObjIndexed(
     (value, key) =>
       (finalSvgString = R.replace(
-        new RegExp(value, "gi"),
-        R.prop(key, colourScheme),
+        new RegExp(value ?? "", "gi"),
+        R.prop(key, colourScheme) ?? "",
         finalSvgString
       )),
     defaultColourScheme
@@ -42,7 +57,7 @@ const convertMega = (_: string, svgString: string) =>
 const convertSq1 = (_: string, svgString: string) =>
   applyColourScheme(svgString, sq1DefaultColourScheme, get(sq1ColourScheme));
 
-const convertSvgColourScheme = R.cond([
+const convertSvgColourScheme = R.cond<[string, string], string>([
   [R.equals("PYRA"), convertPyra],
   [R.equals("MEGA"), convertMega],
   [R.equals("SQ1"), convertSq1],

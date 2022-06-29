@@ -1,3 +1,5 @@
+import type { ColourScheme } from "../tools/colourScheme";
+
 const pages = {
   Dashboard: "Dashboard",
   Timer: "Timer",
@@ -19,7 +21,7 @@ const events = [
   "SKEWB",
 ];
 
-const cubeDefaultColourScheme = {
+const cubeDefaultColourScheme: ColourScheme = {
   U: "#ffffff",
   R: "#ff0000",
   F: "#00ff00",
@@ -28,14 +30,14 @@ const cubeDefaultColourScheme = {
   D: "#ffff00",
 };
 
-const pyraDefaultColourScheme = {
+const pyraDefaultColourScheme: ColourScheme = {
   R: "#ff0000",
   F: "#00ff00",
   L: "#0000ff",
   D: "#ffff00",
 };
 
-const sq1DefaultColourScheme = {
+const sq1DefaultColourScheme: ColourScheme = {
   U: "#ffff00",
   R: "#00ff00",
   F: "#ff0000",
@@ -44,7 +46,7 @@ const sq1DefaultColourScheme = {
   D: "#ffffff",
 };
 
-const megaDefaultColourScheme = {
+const megaDefaultColourScheme: ColourScheme = {
   U: "#ffffff",
   R: "#dd0000",
   F: "#006600",

@@ -61,10 +61,10 @@
     green = false;
     red = true;
     startTime = dayjs();
-    timerText = 15 - msToSeconds(dayjs().diff(startTime)).toFixed(0);
+    timerText = (15 - msToSeconds(dayjs().diff(startTime))).toFixed(0);
     timeout = setInterval(() => {
-      const diff = 15 - msToSeconds(dayjs().diff(startTime)).toFixed(0);
-      if (diff > 0) timerText = String(diff);
+      const diff = 15 - msToSeconds(dayjs().diff(startTime));
+      if (diff > 0) timerText = diff.toFixed(0);
       else if (diff > -2) timerText = "+2";
       else timerText = "DNF";
     }, 1000);
