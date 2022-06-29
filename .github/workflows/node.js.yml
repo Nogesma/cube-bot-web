@@ -19,7 +19,7 @@ jobs:
       - run: yarn
       - run: yarn run build
         env:
-          VITE_WEBSITE_URL: "https://manosgr.me/"
+          VITE_REDIRECT_URI: "https://manosgr.me/"
           VITE_CLIENT_ID: "475749622384558080"
       - uses: actions/upload-artifact@v2
         with:
