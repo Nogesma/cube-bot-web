@@ -5,13 +5,10 @@
   import routes from "./routes";
   import Navbar from "./lib/Navbar.svelte";
   import { login } from "./stores/settings";
-  import { location } from "svelte-spa-router";
   import axios from "axios";
+  import { onMount } from "svelte";
 
-  if (new URLSearchParams(window.location.search).has("code"))
-    push("/auth/oauth2callback" + window.location.search);
-
-  if (!$login && $location !== "/")
+  const authenticate = () =>
     axios
       .get(`${import.meta.env.VITE_BACKEND_URI}/api/ping`, {
         withCredentials: true,
@@ -21,6 +18,10 @@
         $login = false;
         push("/auth/login");
       });
+
+  if (new URLSearchParams(window.location.search).has("code"))
+    push("/auth/oauth2callback" + window.location.search);
+  else onMount(authenticate);
 </script>
 
 <Navbar />

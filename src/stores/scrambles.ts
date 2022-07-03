@@ -57,7 +57,10 @@ const scrambleIndex = writable(0);
 const svg: Readable<string> = derived(
   [scramblesSvg, scrambleIndex, currentEvent],
   ([$scramblesSvg, $scrambleIndex, $currentEvent]) =>
-    convertSvgColourScheme($currentEvent, $scramblesSvg[$scrambleIndex])
+    convertSvgColourScheme(
+      $currentEvent,
+      $scramblesSvg[$scrambleIndex]
+    ) as string
 );
 
 const scrambleString = derived(

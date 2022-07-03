@@ -5,6 +5,7 @@
   import axios from "axios";
   import Loading from "../../lib/Loading.svelte";
   import { isEmpty } from "ramda";
+  import { login } from "../../stores/settings";
   const urlParams = new URLSearchParams($querystring ?? "");
   const code = urlParams.get("code");
 
@@ -25,6 +26,7 @@
         localStorage.id = data.id;
         localStorage.username = data.username;
         localStorage.avatar = data.avatar;
+        $login = true;
         window.history.replaceState({}, document.title, "/");
         replace("/");
       })

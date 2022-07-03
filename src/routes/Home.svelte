@@ -2,24 +2,8 @@
   import "../cubing-icons.css";
   import { push } from "svelte-spa-router";
   import { events } from "../data/config.js";
-  import axios from "axios";
-  import { onMount } from "svelte";
   import Loading from "../lib/Loading.svelte";
   import { login } from "../stores/settings";
-
-  const ping = async () => {
-    await axios
-      .get(`${import.meta.env.VITE_BACKEND_URI}/api/ping`, {
-        withCredentials: true,
-      })
-      .then(() => ($login = true))
-      .catch(() => {
-        $login = false;
-        push("/auth/login");
-      });
-  };
-
-  onMount(ping);
 </script>
 
 {#if !$login}

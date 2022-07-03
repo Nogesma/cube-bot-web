@@ -22,22 +22,22 @@
 
   $: {
     $cubeColourScheme;
-    cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString);
+    cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString) as string;
   }
 
   $: {
     $pyraColourScheme;
-    pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString);
+    pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString) as string;
   }
 
   $: {
     $megaColourScheme;
-    megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString);
+    megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString) as string;
   }
 
   $: {
     $sq1ColourScheme;
-    sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString);
+    sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString) as string;
   }
 </script>
 
