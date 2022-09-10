@@ -78,7 +78,8 @@
       timerStatus = 0;
       return;
     }
-    if (event.key !== " ") return;
+    if (event.key !== " " && event.type !== "touchstart") return;
+    event.preventDefault();
     if (timerStatus === 0) {
       timerSetReady();
       timerStatus = 3;
@@ -88,7 +89,8 @@
   };
 
   const up = (event: KeyboardEvent) => {
-    if (event.key !== " ") return;
+    if (event.key !== " " && event.type !== "touchend") return;
+    event.preventDefault();
     if (timerStatus === 3) {
       if (hasInspection) {
         startInspection();
@@ -107,8 +109,24 @@
 
 <svelte:window on:keydown={down} on:keyup={up} />
 
-<div class="flex-auto text-5xl flex items-center basis-3/4">
-  <div class="{green ? 'text-success' : ''} {red ? 'text-error' : ''}">
-    {timerText}
-  </div>
+<div
+  on:touchstart={down}
+  on:touchend={up}
+  class="w-full flex-auto text-5xl flex justify-center items-center basis-3/4 bg-base-100 {timerStatus ===
+  1
+    ? 'overlay'
+    : ''} {green ? 'text-success' : ''} {red ? 'text-error' : ''}"
+>
+  {timerText}
 </div>
+
+<style>
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+</style>
