@@ -51,9 +51,14 @@
       <div
         class="font-mono tracking-tight whitespace-pre-line p-2 text-xl text-center lg:text-3xl"
       >
-        Veuillez soummetre vos temps
+        Veuillez soumettre vos temps
       </div>
 
+      <div
+        class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
+      >
+        {$times[index].solves[4][0]}
+      </div>
       <div
         class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
       >

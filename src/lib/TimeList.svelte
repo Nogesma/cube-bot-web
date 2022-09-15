@@ -25,14 +25,7 @@
     inputTime = "";
   };
 
-  const deleteLastTime = () => {
-    const modal: HTMLInputElement = document.getElementById(
-      "update-time"
-    ) as HTMLInputElement;
-
-    modal.checked = false;
-    times.update(R.over(solvesLens, R.dropLast(1)));
-  };
+  const deleteLastTime = () => times.update(R.over(solvesLens, R.dropLast(1)));
 
   const updatePenality = (i: number, a: number) => {
     times.update((t) =>
@@ -68,6 +61,7 @@
   };
 
   let selectedTimeIndex = 0;
+  let isChecked = false;
 </script>
 
 <svelte:window on:keydown={handleEnter} />
@@ -78,20 +72,44 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Temps</th>
+        <th class="hidden lg:table-cell" scope="col">Penalite</th>
       </tr>
     </thead>
     <tbody>
       {#each solves as s, i}
-        <tr>
-          <th>{i + 1}</th>
+        <tr
+          class="lg:pointer-events-none lg:cursor-default"
+          on:click={() => {
+            if (matchMedia("(min-width: 1024px)").matches) return;
+            selectedTimeIndex = i;
+            isChecked = true;
+          }}
+        >
+          <th>
+            {#if solves.length === i + 1}
+              <button
+                class="text-red-600 pointer-events-auto"
+                on:click={deleteLastTime}>X</button
+              >
+            {:else}
+              {i + 1}
+            {/if}
+          </th>
           <td>
-            <label
-              for="update-time"
-              on:click={async () => (selectedTimeIndex = i)}
-            >
-              {R.pipe(applyPenality, secondsToTime)(s)}
-              {s[1] === 1 ? "+" : ""}</label
-            >
+            {R.pipe(applyPenality, secondsToTime)(s)}
+            {s[1] === 1 ? "+" : ""}
+          </td>
+          <td class="hidden lg:table-cell">
+            <div class="btn-group flex-nowrap">
+              {#each ["OK", "+2", "DNF"] as penality, p}
+                <button
+                  class="btn btn-xs {solves[i][1] === p
+                    ? 'btn-active'
+                    : ''} pointer-events-auto"
+                  on:click={() => updatePenality(i, p)}>{penality}</button
+                >
+              {/each}
+            </div>
           </td>
         </tr>
       {/each}
@@ -99,6 +117,7 @@
         <tr>
           <th>{i + 1}</th>
           <td />
+          <td class="hidden lg:table-cell" />
         </tr>
       {/each}
     </tbody>
@@ -149,16 +168,23 @@
   </label>
 </label>
 
-<input type="checkbox" id="update-time" class="modal-toggle" />
+<input
+  type="checkbox"
+  id="update-time"
+  class="modal-toggle"
+  bind:checked={isChecked}
+/>
 <label for="update-time" class="modal cursor-pointer">
   <label class="modal-box relative" for="">
-    {#if selectedTimeIndex < solves.length}
-      <div class="flex flex-row justify-evenly place-items-center">
-        <h3 class="font-bold text-lg text-center">
+    <div class="flex flex-row justify-evenly place-items-center">
+      <h3 class="font-bold text-lg text-center">
+        {#if selectedTimeIndex < solves.length}
           {R.pipe(applyPenality, secondsToTime)(solves[selectedTimeIndex])}
           {solves[selectedTimeIndex][1] === 1 ? "+" : ""}
-        </h3>
-        <div class="btn-group">
+        {/if}
+      </h3>
+      <div class="btn-group">
+        {#if selectedTimeIndex < solves.length}
           {#each ["OK", "+2", "DNF"] as penality, p}
             <button
               class="btn btn-md {solves[selectedTimeIndex][1] === p
@@ -168,11 +194,8 @@
               >{penality}</button
             >
           {/each}
-          {#if R.equals(selectedTimeIndex + 1, R.length(solves))}
-            <button class="btn btn-md" on:click={deleteLastTime}>X</button>
-          {/if}
-        </div>
+        {/if}
       </div>
-    {/if}
+    </div>
   </label>
 </label>

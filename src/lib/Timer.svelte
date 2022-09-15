@@ -73,7 +73,7 @@
   let isKeyDown = false;
 
   const down = (event: KeyboardEvent) => {
-    if (isKeyDown) return;
+    if (isKeyDown || event.repeat) return;
     if (event.key === " ") isKeyDown = true;
     if (timerStatus === 1) {
       stopTimer();
@@ -91,7 +91,6 @@
   const up = (event: KeyboardEvent) => {
     if (event.key !== " ") return;
     isKeyDown = false;
-    console.log({ timerStatus });
     event.preventDefault();
     if (timerStatus === 3) {
       if (hasInspection) {
