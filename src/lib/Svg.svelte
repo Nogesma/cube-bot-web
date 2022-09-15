@@ -5,12 +5,7 @@
   import { currentEvent } from "../stores/times.js";
 </script>
 
-<div
-  class="flex flex-grow-0 {$currentEvent === 'MEGA'
-    ? 'w-4/6'
-    : 'lg:w-1/3'} max-h-full"
-  style="height: 56rem"
->
+<div class="max-h-96">
   {#if includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])}
     {@html convertSvgColourScheme(
       $currentEvent,

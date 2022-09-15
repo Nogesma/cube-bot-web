@@ -45,22 +45,18 @@
   );
 </script>
 
-<div
-  class="flex flex-row justify-evenly flex-wrap {$currentEvent === 'MEGA'
-    ? ''
-    : 'lg:flex-nowrap'}"
->
-  <div class="flex flex-col pl-2">
-    <TimeList />
-  </div>
+<div class="flex flex-col h-full justify-evenly">
   {#if R.equals(5, $scrambleIndex)}
-    <div class="flex-col flex-auto flex items-center justify-center basis-1/2">
-      <div class="text-4xl">Veuillez soumettre vos temps</div>
-
-      <div class="flex-auto text-5xl flex items-center">
-        {secondsToTime($times[index].solves[4][0])}
+    <div class="flex-col flex-auto flex items-center justify-center basis-full">
+      <div
+        class="font-mono tracking-tight whitespace-pre-line p-2 text-xl text-center lg:text-3xl"
+      >
+        Veuillez soummetre vos temps
       </div>
-      <div class="text-4xl">
+
+      <div
+        class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
+      >
         ao5:
         {secondsToTime(
           averageOfFiveCalculator(parseTimesArray($times[index].solves))
@@ -68,14 +64,15 @@
       </div>
     </div>
   {:else}
-    <div
-      class="flex-col flex-grow flex-shrink-0 flex items-center justify-center basis-1/3"
-    >
+    <div class="flex-col flex-auto flex items-center justify-center basis-full">
       <Scrambles />
       <Timer />
     </div>
-    {#if displayScramble}
+  {/if}
+  <div class="flex flex-row flex-auto">
+    <TimeList />
+    {#if displayScramble && $scrambleIndex !== 5}
       <Svg />
     {/if}
-  {/if}
+  </div>
 </div>

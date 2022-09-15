@@ -70,26 +70,28 @@
     }, 1000);
   };
 
+  let isKeyDown = false;
+
   const down = (event: KeyboardEvent) => {
-    if (event.key === " ") event.preventDefault();
-    if (event.repeat) return;
+    if (isKeyDown) return;
+    if (event.key === " ") isKeyDown = true;
     if (timerStatus === 1) {
       stopTimer();
       timerStatus = 0;
-      return;
+    } else {
+      if (event.key !== " ") return;
+      event.preventDefault();
+      if (timerStatus === 0) {
+        timerSetReady();
+        timerStatus = 3;
+      } else if (timerStatus === 2) timerSetReady();
     }
-    if (event.key !== " " && event.type !== "touchstart") return;
-    event.preventDefault();
-    if (timerStatus === 0) {
-      timerSetReady();
-      timerStatus = 3;
-      return;
-    }
-    if (timerStatus === 2) timerSetReady();
   };
 
   const up = (event: KeyboardEvent) => {
-    if (event.key !== " " && event.type !== "touchend") return;
+    if (event.key !== " ") return;
+    isKeyDown = false;
+    console.log({ timerStatus });
     event.preventDefault();
     if (timerStatus === 3) {
       if (hasInspection) {
@@ -104,15 +106,39 @@
       timerStatus = 1;
     } else if (timerStatus === 0) red = false;
   };
-  export { up, down };
+
+  const touchStart = () => {
+    if (timerStatus === 1) {
+      stopTimer();
+      timerStatus = 0;
+    } else if (timerStatus === 0) {
+      timerSetReady();
+      timerStatus = 3;
+    } else if (timerStatus === 2) timerSetReady();
+  };
+
+  const touchEnd = () => {
+    if (timerStatus === 3) {
+      if (hasInspection) {
+        startInspection();
+        timerStatus = 2;
+      } else {
+        startTimer();
+        timerStatus = 1;
+      }
+    } else if (timerStatus === 2) {
+      startTimer();
+      timerStatus = 1;
+    } else if (timerStatus === 0) red = false;
+  };
 </script>
 
 <svelte:window on:keydown={down} on:keyup={up} />
 
 <div
-  on:touchstart={down}
-  on:touchend={up}
-  class="w-full flex-auto text-5xl flex justify-center items-center basis-3/4 bg-base-100 {timerStatus ===
+  on:touchstart|preventDefault={touchStart}
+  on:touchend|preventDefault={touchEnd}
+  class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full {timerStatus ===
   1
     ? 'overlay'
     : ''} {green ? 'text-success' : ''} {red ? 'text-error' : ''}"

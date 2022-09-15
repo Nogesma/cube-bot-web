@@ -24,6 +24,7 @@
   else onMount(authenticate);
 </script>
 
-<Navbar />
-
-<Router {routes} />
+<div class="h-screen flex flex-col">
+  <Navbar />
+  <Router {routes} />
+</div>

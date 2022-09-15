@@ -1,13 +1,13 @@
 <script lang="ts">
   import { scrambleString } from "../stores/scrambles.js";
-  import { scrambleSize } from "../stores/settings.js";
+  import { currentEvent } from "../stores/times.js";
 </script>
 
-<div class="flex justify-center">
 <div
-  class="font-mono"
-  style="font-size: {$scrambleSize}px; white-space: pre-line;"
+  class="font-mono tracking-tight whitespace-pre-line p-2 {$currentEvent ===
+  'MEGA'
+    ? 'text-sm'
+    : 'text-xl text-center'} lg:text-3xl"
 >
   {$scrambleString}
-</div>
 </div>
