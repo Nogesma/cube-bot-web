@@ -8,7 +8,7 @@ export default {
   "/settings": wrap({
     asyncComponent: () => import("./routes/Settings.svelte"),
   }),
-  "/rankings": wrap({
+  "/rankings/:event?/:type?/:date?": wrap({
     asyncComponent: () => import("./routes/Rankings.svelte"),
   }),
   "/auth/login": wrap({

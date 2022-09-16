@@ -4,12 +4,16 @@
   import { events } from "../data/config.js";
   import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
   import axios from "axios";
-  import { isEmpty } from "ramda";
+  import { includes, isEmpty } from "ramda";
+  import { push } from "svelte-spa-router";
+  import { onMount } from "svelte";
 
-  let rankEvent: string;
-  let dayOrMonth: string;
+  export let params: { event?: string; type?: string; date?: string };
+
+  let rankEvent = params.event;
+  let dayOrMonth = params.type;
   let isDay = true;
-  let stringDate = dayjs().format("YYYY-MM-DD");
+  let stringDate = params.date ?? dayjs().format("YYYY-MM-DD");
 
   const fetchRankings = async () =>
     axios
@@ -28,6 +32,9 @@
     rankings = isDay
       ? ((await fetchRankings()) as DailyRankings[])
       : ((await fetchRankings()) as MonthlyRankings[]);
+    await push(
+      `/rankings/${rankEvent}/${dayOrMonth}/${date.format("YYYY-MM-DD")}`
+    );
   };
 
   interface DailyRankings {
@@ -50,10 +57,22 @@
   type Ranks = MonthlyRankings | DailyRankings;
 
   let rankings: Ranks[] = [];
+  let isValidInput: boolean;
+
   $: date = dayjs(stringDate);
   $: isValidDate = date.isValid();
   $: isValidInput =
-    rankEvent !== "Event" && dayOrMonth !== "Jour/Mois" && isValidDate;
+    includes(rankEvent, events) &&
+    includes(dayOrMonth, ["day", "month"]) &&
+    isValidDate;
+
+  onMount(() => {
+    if (isValidInput) handleSubmit();
+    else {
+      rankEvent = "Event";
+      dayOrMonth = "Jour/Mois";
+    }
+  });
 
   let formattedDate: string;
 

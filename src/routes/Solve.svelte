@@ -17,6 +17,8 @@
   } from "../stores/settings.js";
   import Scrambles from "../lib/Scrambles.svelte";
   import Svg from "../lib/Svg.svelte";
+  import { push } from "svelte-spa-router";
+  import dayjs from "dayjs";
 
   export let params = { event: "333" };
 
@@ -66,6 +68,25 @@
         {secondsToTime(
           averageOfFiveCalculator(parseTimesArray($times[index].solves))
         )}
+      </div>
+
+      <div
+        class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full gap-4"
+      >
+        <button
+          class="btn"
+          on:click={() =>
+            push(
+              `/rankings/${$currentEvent}/day/${dayjs().format("YYYY-MM-DD")}`
+            )}>Classement du jour</button
+        >
+        <button
+          class="btn"
+          on:click={() =>
+            push(
+              `/rankings/${$currentEvent}/month/${dayjs().format("YYYY-MM-DD")}`
+            )}>Classement du mois</button
+        >
       </div>
     </div>
   {:else}
