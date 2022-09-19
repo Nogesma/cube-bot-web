@@ -59,7 +59,7 @@
       <div
         class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
       >
-        {$times[index].solves[4][0]}
+        {secondsToTime($times[index].solves[4][0])}
       </div>
       <div
         class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
