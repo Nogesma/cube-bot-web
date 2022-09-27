@@ -1,6 +1,5 @@
 import * as R from "ramda";
 import { get } from "svelte/store";
-import DOMPurify from "dompurify";
 
 import {
   cubeDefaultColourScheme,
@@ -16,6 +15,12 @@ import {
   sq1ColourScheme,
 } from "../stores/settings";
 
+const getHtmlColour = (colour: string) => {
+  const s = new Option().style;
+  s.color = colour;
+  return s.color === "" ? "#000000" : colour;
+};
+
 const applyColourScheme = (
   svgString: string | undefined,
   defaultColourScheme: ColourScheme,
@@ -27,7 +32,7 @@ const applyColourScheme = (
     (value, key) =>
       (finalSvgString = R.replace(
         new RegExp(value, "gi"),
-        R.prop(key, colourScheme),
+        getHtmlColour(R.prop(key, colourScheme)),
         finalSvgString
       )),
     defaultColourScheme
@@ -53,8 +58,7 @@ const convertSvgColourScheme = R.pipe(
     [R.equals("MEGA"), convertMega],
     [R.equals("SQ1"), convertSq1],
     [R.T, convertCube],
-  ]),
-  DOMPurify.sanitize
+  ])
 );
 
 export { convertSvgColourScheme };
