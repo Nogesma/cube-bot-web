@@ -26,7 +26,10 @@
       href="#/rankings"
       class="btn btn-ghost normal-case text-xl hidden lg:flex">Classement</a
     >
-
+    <a
+      href="#/settings"
+      class="btn btn-ghost normal-case text-xl hidden lg:flex">Réglages</a
+    >
     {#if $login}
       <div class="flex-none">
         <div class="dropdown dropdown-end">
@@ -45,9 +48,11 @@
               >
             </li>
             <li>
-              <button on:click={() => push("/settings")}>Settings</button>
+              <button class="lg:hidden" on:click={() => push("/settings")}
+                >Réglages</button
+              >
             </li>
-            <li><button on:click={logout}>Logout</button></li>
+            <li><button on:click={logout}>Déconnexion</button></li>
           </ul>
         </div>
       </div>

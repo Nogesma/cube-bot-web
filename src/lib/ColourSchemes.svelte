@@ -8,12 +8,7 @@
   } from "../stores/settings.js";
 
   import { convertSvgColourScheme } from "../tools/colourScheme.js";
-  import {
-    cubeDefaultSvgString,
-    megaDefaultSvgString,
-    pyraDefaultSvgString,
-    sq1DefaultSvgString,
-  } from "../data/defaultSvg.js";
+  import { getDefaultSvgString } from "../data/defaultSvg.js";
 
   let cubeSvg: string;
   let pyraSvg: string;
@@ -22,106 +17,132 @@
 
   $: {
     $cubeColourScheme;
-    cubeSvg = convertSvgColourScheme("333", cubeDefaultSvgString) as string;
+    cubeSvg = convertSvgColourScheme("333", getDefaultSvgString("333"));
   }
 
   $: {
     $pyraColourScheme;
-    pyraSvg = convertSvgColourScheme("PYRA", pyraDefaultSvgString) as string;
+    pyraSvg = convertSvgColourScheme("PYRA", getDefaultSvgString("PYRA"));
   }
 
   $: {
     $megaColourScheme;
-    megaSvg = convertSvgColourScheme("MEGA", megaDefaultSvgString) as string;
+    megaSvg = convertSvgColourScheme("MEGA", getDefaultSvgString("MEGA"));
   }
 
   $: {
     $sq1ColourScheme;
-    sq1Svg = convertSvgColourScheme("SQ1", sq1DefaultSvgString) as string;
+    sq1Svg = convertSvgColourScheme("SQ1", getDefaultSvgString("SQ1"));
   }
 </script>
 
-<div class="text-5xl">Colour Schemes</div>
+<div>
+  <div class="text-5xl text-center">Colour Schemes</div>
 
-<div class="flex justify-center flex-col content-evenly">
-  <h2>Cubes:</h2>
-  <div class="flex flex-row justify-evenly flex-wrap ">
-    <div class="flex flex-col justify-self-start justify-evenly">
-      {#each R.keys($cubeColourScheme) as key}
-        <div class="input-group mb-3">
-          <span class="input-group-text">{key}</span>
-          <label class="input-group-text">
-            <input type="color" bind:value={$cubeColourScheme[key]} />
+  <div class="flex flex-col gap-5 w-full">
+    <h2>Cubes:</h2>
+    <div class="flex flex-row flex-auto justify-evenly">
+      <div class="flex flex-col flex-auto gap-2 max-w-md">
+        {#each R.keys($cubeColourScheme) as key}
+          <label class="input-group">
+            <span class="w-14 justify-center">{key}</span>
+            <input
+              class="input p-0 m-0"
+              type="color"
+              bind:value={$cubeColourScheme[key]}
+            />
+            <input
+              class="input input-bordered flex-grow"
+              type="text"
+              bind:value={$cubeColourScheme[key]}
+            />
           </label>
-          <input type="text" bind:value={$cubeColourScheme[key]} />
-        </div>
-      {/each}
-      <button class="btn" on:click={cubeColourScheme.reset}
-        >Réinitialiser
-      </button>
+        {/each}
+        <button class="btn" on:click={cubeColourScheme.reset}
+          >Réinitialiser
+        </button>
+      </div>
+      <div class="flex flex-auto max-h-96">
+        {@html cubeSvg}
+      </div>
     </div>
-    <div class="basis-1/5">
-      {@html cubeSvg}
+    <h2 id="pyra">Pyraminx:</h2>
+    <div class="flex flex-row flex-auto">
+      <div class="flex flex-col flex-auto gap-2 max-w-md">
+        {#each R.keys($pyraColourScheme) as key}
+          <label class="input-group">
+            <span class="w-14 justify-center">{key}</span>
+            <input
+              class="input p-0 m-0"
+              type="color"
+              bind:value={$pyraColourScheme[key]}
+            />
+            <input
+              class="input input-bordered flex-grow"
+              type="text"
+              bind:value={$pyraColourScheme[key]}
+            />
+          </label>
+        {/each}
+        <button class="btn" on:click={pyraColourScheme.reset}
+          >Réinitialiser
+        </button>
+      </div>
+      <div class="flex flex-auto max-h-96">
+        {@html pyraSvg}
+      </div>
     </div>
-  </div>
-  <h2 id="pyra">Pyraminx:</h2>
-  <div class="flex flex-row justify-evenly flex-wrap">
-    <div class="flex flex-col justify-self-start justify-evenly">
-      {#each R.keys($pyraColourScheme) as key}
-        <div class="input-group mb-3">
-          <span class="input-group-text">{key}</span>
-          <span class="input-group-text"
-            ><input type="color" bind:value={$pyraColourScheme[key]} /></span
-          >
-          <input type="text" bind:value={$pyraColourScheme[key]} />
-        </div>
-      {/each}
-      <button class="btn" on:click={pyraColourScheme.reset}
-        >Réinitialiser
-      </button>
+    <h2 id="mega">Megaminx:</h2>
+    <div class="flex flex-row flex-auto">
+      <div class="flex flex-col flex-auto gap-2 max-w-md">
+        {#each R.keys($megaColourScheme) as key}
+          <label class="input-group">
+            <span class="w-14 justify-center">{key}</span>
+            <input
+              class="input p-0 m-0"
+              type="color"
+              bind:value={$megaColourScheme[key]}
+            />
+            <input
+              class="input input-bordered flex-grow"
+              type="text"
+              bind:value={$megaColourScheme[key]}
+            />
+          </label>
+        {/each}
+        <button class="btn" on:click={megaColourScheme.reset}
+          >Réinitialiser
+        </button>
+      </div>
+      <div class="flex flex-auto max-h-96">
+        {@html megaSvg}
+      </div>
     </div>
-    <div class="basis-1/6 basis">
-      {@html pyraSvg}
-    </div>
-  </div>
-  <h2 id="mega">Megaminx:</h2>
-  <div class="flex flex-row justify-evenly flex-wrap">
-    <div class="flex flex-col justify-self-start justify-evenly">
-      {#each R.keys($megaColourScheme) as key}
-        <div class="input-group mb-3">
-          <span class="input-group-text">{key}</span>
-          <span class="input-group-text"
-            ><input type="color" bind:value={$megaColourScheme[key]} /></span
-          >
-          <input type="text" bind:value={$megaColourScheme[key]} />
-        </div>
-      {/each}
-      <button class="btn" on:click={megaColourScheme.reset}
-        >Réinitialiser
-      </button>
-    </div>
-    <div class="basis-1/3">
-      {@html megaSvg}
-    </div>
-  </div>
-  <h2 id="sq1">Square-1:</h2>
-  <div class="flex flex-row justify-evenly flex-wrap">
-    <div class="flex flex-col justify-self-start justify-evenly">
-      {#each R.keys($sq1ColourScheme) as key}
-        <div class="input-group mb-3">
-          <span class="input-group-text">{key}</span>
-          <span class="input-group-text"
-            ><input type="color" bind:value={$sq1ColourScheme[key]} /></span
-          >
-          <input type="text" bind:value={$sq1ColourScheme[key]} />
-        </div>
-      {/each}
-      <button class="btn" on:click={sq1ColourScheme.reset}
-        >Réinitialiser
-      </button>
-    </div>
-    <div class="basis-1/12">
-      {@html sq1Svg}
+    <h2 id="sq1">Square-1:</h2>
+    <div class="flex flex-row flex-auto">
+      <div class="flex flex-col flex-auto gap-2 max-w-md">
+        {#each R.keys($sq1ColourScheme) as key}
+          <label class="input-group">
+            <span class="w-14 justify-center">{key}</span>
+            <input
+              class="input p-0 m-0"
+              type="color"
+              bind:value={$sq1ColourScheme[key]}
+            />
+            <input
+              class="input input-bordered flex-grow"
+              type="text"
+              bind:value={$sq1ColourScheme[key]}
+            />
+          </label>
+        {/each}
+        <button class="btn" on:click={sq1ColourScheme.reset}
+          >Réinitialiser
+        </button>
+      </div>
+      <div class="flex flex-auto max-h-96">
+        {@html sq1Svg}
+      </div>
     </div>
   </div>
 </div>

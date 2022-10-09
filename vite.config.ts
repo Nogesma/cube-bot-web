@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import viteCompression from "vite-plugin-compression";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   optimizeDeps: {
     exclude: ["scr-to-svg"],
@@ -11,11 +10,11 @@ export default defineConfig({
   plugins: [
     svelte(),
     viteCompression({
-      filter: /\.(js|mjs|json|css|html|wasm|svg)$/i,
+      filter: /\.(js|mjs|json|css|html|wasm|svg|map)$/i,
       algorithm: "brotliCompress",
     }),
     viteCompression({
-      filter: /\.(js|mjs|json|css|html|wasm|svg)$/i,
+      filter: /\.(js|mjs|json|css|html|wasm|svg|map)$/i,
       algorithm: "gzip",
     }),
   ],
