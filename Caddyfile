@@ -1,4 +1,4 @@
-http://manosgr.me {
+http://manosgr.live {
 	encode gzip
 	file_server {
 		precompressed br gzip
