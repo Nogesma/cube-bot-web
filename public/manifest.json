@@ -1,0 +1,17 @@
+{
+  "name":"Cube Competitions",
+  "short_name":"Cube Comps",
+  "start_url":"index.html",
+  "display":"standalone",
+  "background_color":"#5900b3",
+  "theme_color":"black",
+  "scope": ".",
+  "description":"Daily rubik's cube competitions",
+  "icons":[
+    {
+      "src":"/logo.png",
+      "sizes":"128x128",
+      "type":"image/png"
+    }
+  ]
+}

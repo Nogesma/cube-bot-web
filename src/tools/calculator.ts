@@ -22,6 +22,7 @@ import {
   length,
   subtract,
   toString,
+  min
 } from "ramda";
 
 const applyPenality = cond<[number[]], number>([
@@ -81,6 +82,9 @@ const averageOfFiveCalculator = ifElse<[number[]], number, number>(
   always(Infinity)
 );
 
+const computeScore = (rank: number, numberOfContestants: number) =>
+	min(100, Math.ceil((-50 / (numberOfContestants - 1)) * rank) + 100);
+
 export {
   secondsToTime,
   timeToSeconds,
@@ -88,4 +92,5 @@ export {
   applyPenality,
   averageOfFiveCalculator,
   msToSeconds,
+  computeScore
 };
