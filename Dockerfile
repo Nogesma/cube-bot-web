@@ -28,6 +28,7 @@ COPY index.html \
     ./
 
 COPY src src
+COPY public public
 
 RUN yarn run build
 
