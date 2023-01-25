@@ -40,31 +40,33 @@
     if (event.repeat) return;
 
     const isSubmit = R.equals(5, R.length(solves));
-    const modal: HTMLInputElement = isSubmit
-      ? (document.getElementById("submit-time") as HTMLInputElement)
-      : (document.getElementById("add-time") as HTMLInputElement);
 
-    if (event.key === "Escape") modal.checked = false;
+    if (event.key === "Escape") showInput = false;
 
     if (event.key === "Enter") {
-      if (!modal) return;
-
-      modal.checked = !modal.checked;
-
-      if (isSubmit && modal.checked)
+      if (isSubmit && !showInput)
         response = (await submitEvent($times[eventIndex])) as string;
       else if (!isSubmit)
-        modal.checked
-          ? window.setTimeout(
+        showInput
+          ? addTime()
+          : window.setTimeout(
               () => document.getElementById("time-input")?.focus(),
               10
-            )
-          : addTime();
+            );
+
+      showInput = !showInput;
     }
   };
 
   let selectedTimeIndex = 0;
   let isChecked = false;
+  let showInput = false;
+  let menu: HTMLElement;
+
+  const onPageClick = (e: MouseEvent) => {
+    if (e.target === menu || menu?.contains(e.target as Node)) return;
+    showInput = false;
+  };
 </script>
 
 <svelte:window on:keydown={handleEnter} />
@@ -127,49 +129,60 @@
   </table>
 
   {#if R.equals(5, R.length(solves))}
-    <label
-      class="btn modal-button"
-      for="submit-time"
-      on:click={async () => (response = await submitEvent($times[eventIndex]))}
-      >Soumettre les temps</label
+    <div
+      class="btn"
+      on:click={async () => {
+        showInput = true;
+        response = await submitEvent($times[eventIndex]);
+      }}
     >
+      Soumettre les temps
+    </div>
   {:else}
-    <label class="btn modal-button font-bold w-full" for="add-time">
+    <button class="btn font-bold w-full" on:click={() => (showInput = true)}>
       Ajouter un temps
-    </label>
+    </button>
   {/if}
 </div>
 
-<input type="checkbox" id="submit-time" class="modal-toggle" />
-<label for="submit-time" class="modal modal-pointer">
-  <label class="modal-box relative" for="">
-    <h3 class="font-bold text-lg">Résultats</h3>
-    <p class="py-4">
-      {#if !response}
-        <Loading />
-      {:else}
-        {response}
-      {/if}
-    </p>
-  </label>
-</label>
-
-<input type="checkbox" id="add-time" class="modal-toggle" />
-<label for="add-time" class="modal cursor-pointer">
-  <label class="modal-box relative" for="">
-    <h3 class="font-bold text-lg">Temps</h3>
-    <div class="flex flex-row flex-auto justify-around mt-4">
-      <input
-        type="text"
-        id="time-input"
-        bind:value={inputTime}
-        placeholder="1:23.456"
-        class="input input-bordered w-full max-w-xs"
-      />
-      <label for="add-time" on:click={addTime} class="btn ml-2">Valider</label>
+{#if showInput}
+  <div
+    class="bg-transparent/30 w-full h-full absolute z-20"
+    style="top: 0px; left: 0px;"
+    on:click={onPageClick}
+  >
+    <div
+      bind:this={menu}
+      style="top: 50%; left: 50%;transform: translate(-50%, -50%);"
+      class="card shadow-xl fixed bg-base-200 z-40"
+    >
+      <div class="card-body">
+        {#if R.equals(5, R.length(solves))}
+          <h3 class="font-bold text-lg">Résultats</h3>
+          <p class="py-4">
+            {#if !response}
+              <Loading />
+            {:else}
+              {response}
+            {/if}
+          </p>
+        {:else}
+          <h3 class="font-bold text-lg">Temps</h3>
+          <div class="flex flex-row flex-auto justify-around mt-4">
+            <input
+              type="text"
+              bind:value={inputTime}
+              autofocus
+              placeholder="1:23.456"
+              class="input input-bordered w-full max-w-xs"
+            />
+            <button on:click={addTime} class="btn ml-2">Valider</button>
+          </div>
+        {/if}
+      </div>
     </div>
-  </label>
-</label>
+  </div>
+{/if}
 
 <input
   type="checkbox"
