@@ -55,7 +55,10 @@
         response = (await submitEvent($times[eventIndex])) as string;
       else if (!isSubmit)
         modal.checked
-          ? document.getElementById("time-input")?.focus()
+          ? window.setTimeout(
+              () => document.getElementById("time-input")?.focus(),
+              10
+            )
           : addTime();
     }
   };

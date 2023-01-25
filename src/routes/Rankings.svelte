@@ -7,7 +7,7 @@
   import { includes, isEmpty } from "ramda";
   import { push } from "svelte-spa-router";
   import { onMount } from "svelte";
-  import { computeScore } from "../tools/calculator.js"
+  import { computeScore } from "../tools/calculator.js";
 
   export let params: { event?: string; type?: string; date?: string };
 
@@ -133,8 +133,8 @@
           <th>Nom</th>
           <th>Moyenne</th>
           <th>Meilleur</th>
-	  <th>Résultats</th>
-	  <th>Pts</th>
+          <th>Résultats</th>
+          <th>Pts</th>
         </tr>
       </thead>
       <tbody>
@@ -162,8 +162,8 @@
             <td>{single}</td>
             <td style="word-spacing: 30px"
               >{R.join(" ", formatSolvesArray(solves))}
-	    </td>
-	    <td>{computeScore(i, rankings.length)}</td>
+            </td>
+            <td>{computeScore(i, rankings.length)}</td>
           </tr>
         {/each}
       </tbody>
