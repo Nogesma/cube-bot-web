@@ -154,7 +154,7 @@
     <div
       bind:this={menu}
       style="top: 50%; left: 50%;transform: translate(-50%, -50%);"
-      class="card card-side shadow-xl fixed bg-base-200 z-40"
+      class="card fixed bg-base-200 z-40 lg:w-1/3 w-11/12"
     >
       <div class="card-body">
         {#if R.equals(5, R.length(solves))}
@@ -168,15 +168,13 @@
           </p>
         {:else}
           <h3 class="card-title">Temps</h3>
-          <div class="flex flex-row flex-auto justify-around mt-4">
-            <input
-              type="text"
-              bind:value={inputTime}
-              autofocus
-              placeholder="1:23.456"
-              class="input input-bordered w-full max-w-xs"
-            />
-          </div>
+          <input
+            type="text"
+            bind:value={inputTime}
+            autofocus
+            placeholder="1:23.456"
+            class="input input-bordered w-full mt-2"
+          />
           <button on:click={addTime} class="btn w-full mt-2">Valider</button>
         {/if}
       </div>
