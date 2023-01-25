@@ -154,11 +154,11 @@
     <div
       bind:this={menu}
       style="top: 50%; left: 50%;transform: translate(-50%, -50%);"
-      class="card shadow-xl fixed bg-base-200 z-40"
+      class="card card-side shadow-xl fixed bg-base-200 z-40"
     >
       <div class="card-body">
         {#if R.equals(5, R.length(solves))}
-          <h3 class="font-bold text-lg">Résultats</h3>
+          <h3 class="card-title">Résultats</h3>
           <p class="py-4">
             {#if !response}
               <Loading />
@@ -167,7 +167,7 @@
             {/if}
           </p>
         {:else}
-          <h3 class="font-bold text-lg">Temps</h3>
+          <h3 class="card-title">Temps</h3>
           <div class="flex flex-row flex-auto justify-around mt-4">
             <input
               type="text"
@@ -176,8 +176,8 @@
               placeholder="1:23.456"
               class="input input-bordered w-full max-w-xs"
             />
-            <button on:click={addTime} class="btn ml-2">Valider</button>
           </div>
+          <button on:click={addTime} class="btn w-full mt-2">Valider</button>
         {/if}
       </div>
     </div>
