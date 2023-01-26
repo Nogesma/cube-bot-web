@@ -4,7 +4,7 @@
   import { events } from "../data/config.js";
   import { getAvatarUrl, formatSolvesArray } from "../tools/utilities.js";
   import axios from "axios";
-  import { includes, isEmpty } from "ramda";
+  import { includes } from "ramda";
   import { push } from "svelte-spa-router";
   import { onMount } from "svelte";
   import { computeScore } from "../tools/calculator.js";
@@ -78,10 +78,10 @@
   let formattedDate: string;
 
   const isDailyRankings = (r: Ranks[]): r is DailyRankings[] =>
-    !isEmpty(r) && !!(r as DailyRankings[])[0].single;
+    r.length > 0 && !!(r as DailyRankings[])[0].single;
 
   const isMonthlyRankings = (r: Ranks[]): r is MonthlyRankings[] =>
-    !isEmpty(r) && !!(r as MonthlyRankings[])[0].score;
+    r.length > 0 && !!(r as MonthlyRankings[])[0].score;
 </script>
 
 <div class="flex flex-col container mx-auto">

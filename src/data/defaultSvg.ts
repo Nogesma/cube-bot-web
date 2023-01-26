@@ -3,23 +3,7 @@ import pyra from "../assets/pyra.svg";
 import mega from "../assets/mega.svg";
 import sq1 from "../assets/sq1.svg";
 import axios from "axios";
-import {
-  always,
-  cond,
-  equals,
-  forEachObjIndexed,
-  memoizeWith,
-  pipe,
-  replace,
-  T,
-} from "ramda";
-import type { ColourScheme } from "./config";
-import {
-  cubeDefaultColourScheme,
-  megaDefaultColourScheme,
-  pyraDefaultColourScheme,
-  sq1DefaultColourScheme,
-} from "./config";
+import { always, cond, equals, memoizeWith, T } from "ramda";
 
 const cubeDefaultSvgString = getSvg("333", "");
 
@@ -38,62 +22,14 @@ const sq1DefaultSvgString: string = await axios
   .then(({ data }) => data)
   .catch(() => "");
 
-const applyPrefix = ({
-  svgString,
-  colourScheme,
-}: {
-  svgString: string;
-  colourScheme: ColourScheme;
-}) => {
-  if (!svgString) return "";
-  let finalSvgString = svgString;
-  forEachObjIndexed(
-    (value) =>
-      (finalSvgString = replace(
-        new RegExp(value, "gi"),
-        `dc-${value}`,
-        finalSvgString
-      )),
-    colourScheme
-  );
-  return finalSvgString;
-};
-
 const getDefaultSvgString = memoizeWith<(event: string) => string>(
   String,
-  pipe(
-    cond([
-      [
-        equals("PYRA"),
-        always({
-          svgString: pyraDefaultSvgString,
-          colourScheme: pyraDefaultColourScheme,
-        }),
-      ],
-      [
-        equals("MEGA"),
-        always({
-          svgString: megaDefaultSvgString,
-          colourScheme: megaDefaultColourScheme,
-        }),
-      ],
-      [
-        equals("SQ1"),
-        always({
-          svgString: sq1DefaultSvgString,
-          colourScheme: sq1DefaultColourScheme,
-        }),
-      ],
-      [
-        T,
-        always({
-          svgString: cubeDefaultSvgString,
-          colourScheme: cubeDefaultColourScheme,
-        }),
-      ],
-    ]),
-    applyPrefix
-  )
+  cond([
+    [equals("PYRA"), always(pyraDefaultSvgString)],
+    [equals("MEGA"), always(megaDefaultSvgString)],
+    [equals("SQ1"), always(sq1DefaultSvgString)],
+    [T, always(cubeDefaultSvgString)],
+  ])
 );
 
 export { getDefaultSvgString };

@@ -14,11 +14,27 @@ import {
   pyraColourScheme,
   sq1ColourScheme,
 } from "../stores/settings";
+import { forEachObjIndexed, replace } from "ramda";
 
 const getHtmlColour = (colour: string) => {
   const s = new Option().style;
   s.color = colour;
   return s.color === "" ? "#000000" : colour;
+};
+
+const applyPrefix = (svgString: string, colourScheme: ColourScheme) => {
+  if (!svgString) return "";
+  let finalSvgString = svgString;
+  forEachObjIndexed(
+    (value) =>
+      (finalSvgString = replace(
+        new RegExp(value, "gi"),
+        `dc-${value}`,
+        finalSvgString
+      )),
+    colourScheme
+  );
+  return finalSvgString;
 };
 
 const applyColourScheme = (
@@ -41,16 +57,32 @@ const applyColourScheme = (
 };
 
 const convertCube = (_: string, svgString: string) =>
-  applyColourScheme(svgString, cubeDefaultColourScheme, get(cubeColourScheme));
+  applyColourScheme(
+    applyPrefix(svgString, cubeDefaultColourScheme),
+    cubeDefaultColourScheme,
+    get(cubeColourScheme)
+  );
 
 const convertPyra = (_: string, svgString: string) =>
-  applyColourScheme(svgString, pyraDefaultColourScheme, get(pyraColourScheme));
+  applyColourScheme(
+    applyPrefix(svgString, pyraDefaultColourScheme),
+    pyraDefaultColourScheme,
+    get(pyraColourScheme)
+  );
 
 const convertMega = (_: string, svgString: string) =>
-  applyColourScheme(svgString, megaDefaultColourScheme, get(megaColourScheme));
+  applyColourScheme(
+    applyPrefix(svgString, megaDefaultColourScheme),
+    megaDefaultColourScheme,
+    get(megaColourScheme)
+  );
 
 const convertSq1 = (_: string, svgString: string) =>
-  applyColourScheme(svgString, sq1DefaultColourScheme, get(sq1ColourScheme));
+  applyColourScheme(
+    applyPrefix(svgString, sq1DefaultColourScheme),
+    sq1DefaultColourScheme,
+    get(sq1ColourScheme)
+  );
 
 const convertSvgColourScheme = R.cond<[string, string], string>([
   [R.equals("PYRA"), convertPyra],
