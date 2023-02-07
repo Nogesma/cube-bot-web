@@ -6,8 +6,8 @@
 <div
   class="font-mono tracking-tight whitespace-pre-line p-2 {$currentEvent ===
   'MEGA'
-    ? 'text-sm'
-    : 'text-xl text-center'} lg:text-3xl"
+    ? 'text-sm md:text-base xl:text-3xl'
+    : 'text-xl text-center lg:text-3xl'}"
 >
   {$scrambleString}
 </div>
