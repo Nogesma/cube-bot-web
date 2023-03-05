@@ -1,4 +1,4 @@
-import { parseTimesArray } from "./calculator.js";
+import { parseTimesArray, secondsToTime } from "./calculator.js";
 import axios from "axios";
 import { map, toString } from "ramda";
 
@@ -7,7 +7,7 @@ const submitEvent = async (timesArray: {
   solves: number[][];
 }) => {
   const { event, solves } = timesArray;
-  const times = map(toString, parseTimesArray(solves));
+  const times = map(secondsToTime, parseTimesArray(solves));
 
   return axios
     .post(
