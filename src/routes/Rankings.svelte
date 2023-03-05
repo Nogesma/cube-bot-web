@@ -100,7 +100,7 @@
     <div class="flex justify-center px-4">
       <select bind:value={rankEvent} class="select select-bordered">
         <option selected disabled>Event</option>
-        {#each [...events.keys()] as [e]}
+        {#each [...events.keys()] as e}
           <option value={e}>{e}</option>
         {/each}
       </select>
