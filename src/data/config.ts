@@ -34,19 +34,21 @@ export type ColourScheme =
   | PyraColourScheme
   | MegaColourScheme;
 
-const events = [
-  "333",
-  "222",
-  "444",
-  "555",
-  "3BLD",
-  "OH",
-  "SQ1",
-  "MEGA",
-  "PYRA",
-  "CLOCK",
-  "SKEWB",
-];
+const events = new Map([
+  ["333", "333"],
+  ["222", "222"],
+  ["444", "444"],
+  ["555", "555"],
+  ["666", "666"],
+  ["777", "777"],
+  ["3BLD", "333bf"],
+  ["OH", "333oh"],
+  ["CLOCK", "clock"],
+  ["MEGA", "minx"],
+  ["PYRA", "pyram"],
+  ["SKEWB", "skewb"],
+  ["SQ1", "sq1"],
+]);
 
 const cubeDefaultColourScheme: CubeColourScheme = {
   U: "#ffffff",

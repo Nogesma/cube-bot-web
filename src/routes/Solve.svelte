@@ -7,6 +7,7 @@
     averageOfFiveCalculator,
     secondsToTime,
     parseTimesArray,
+    meanOfThreeCalculator,
   } from "../tools/calculator.js";
 
   import { currentEvent, times } from "../stores/times.js";
@@ -19,6 +20,7 @@
   import Svg from "../lib/Svg.svelte";
   import { push } from "svelte-spa-router";
   import dayjs from "dayjs";
+  import { is } from "ramda";
 
   export let params = { event: "333" };
 
@@ -45,10 +47,12 @@
     $currentEvent,
     $disableScramblesDisplayForBlind
   );
+
+  $: isMo3 = $currentEvent === "666" || $currentEvent === "777";
 </script>
 
 <div class="flex flex-col h-full justify-evenly">
-  {#if R.equals(5, $scrambleIndex)}
+  {#if R.equals(isMo3 ? 3 : 5, $scrambleIndex)}
     <div class="flex-col flex-auto flex items-center justify-center basis-full">
       <div
         class="font-mono tracking-tight whitespace-pre-line p-2 text-xl text-center lg:text-3xl"
@@ -59,14 +63,18 @@
       <div
         class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
       >
-        {secondsToTime($times[index].solves[4][0])}
+        {secondsToTime(
+          $times[index].solves[$times[index].solves.length - 1][0]
+        )}
       </div>
       <div
         class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full"
       >
-        ao5:
+        {isMo3 ? "mo3" : "ao5"}:
         {secondsToTime(
-          averageOfFiveCalculator(parseTimesArray($times[index].solves))
+          (isMo3 ? meanOfThreeCalculator : averageOfFiveCalculator)(
+            parseTimesArray($times[index].solves)
+          )
         )}
       </div>
 
@@ -97,7 +105,7 @@
   {/if}
   <div class="flex flex-row flex-auto">
     <TimeList />
-    {#if displayScramble && $scrambleIndex !== 5}
+    {#if displayScramble && $scrambleIndex !== (isMo3 ? 3 : 5)}
       <Svg />
     {/if}
   </div>

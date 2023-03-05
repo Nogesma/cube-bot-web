@@ -6,7 +6,7 @@
 </script>
 
 <div class="max-h-96">
-  {#if includes( $currentEvent, ["333", "222", "OH", "3BLD", "444", "555", "MEGA"] )}
+  {#if includes( $currentEvent, ["333", "222", "OH", "3BLD", "444", "555", "MEGA", "666", "777"] )}
     {@html convertSvgColourScheme(
       $currentEvent,
       getSvg($currentEvent, $scrambleString)

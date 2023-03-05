@@ -39,7 +39,7 @@
   const handleEnter = async (event: KeyboardEvent) => {
     if (event.repeat) return;
 
-    const isSubmit = R.equals(5, R.length(solves));
+    const isSubmit = R.equals(isMo3 ? 3 : 5, R.length(solves));
 
     if (event.key === "Escape") showInput = false;
 
@@ -67,6 +67,8 @@
     if (e.target === menu || menu?.contains(e.target as Node)) return;
     showInput = false;
   };
+
+  $: isMo3 = $currentEvent === "666" || $currentEvent === "777";
 </script>
 
 <svelte:window on:keydown={handleEnter} />
@@ -118,7 +120,7 @@
           </td>
         </tr>
       {/each}
-      {#each R.times(R.add(R.length(solves)), 5 - R.length(solves)) as i}
+      {#each R.times(R.add(R.length(solves)), (isMo3 ? 3 : 5) - R.length(solves)) as i}
         <tr>
           <th>{i + 1}</th>
           <td />
@@ -128,7 +130,7 @@
     </tbody>
   </table>
 
-  {#if R.equals(5, R.length(solves))}
+  {#if R.equals(isMo3 ? 3 : 5, R.length(solves))}
     <div
       class="btn"
       on:click={async () => {
@@ -157,7 +159,7 @@
       class="card fixed bg-base-200 z-40 lg:w-1/3 w-11/12"
     >
       <div class="card-body">
-        {#if R.equals(5, R.length(solves))}
+        {#if R.equals(isMo3 ? 3 : 5, R.length(solves))}
           <h3 class="card-title">Résultats</h3>
           <p class="py-4">
             {#if !response}

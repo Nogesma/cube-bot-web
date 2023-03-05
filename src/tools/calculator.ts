@@ -69,16 +69,16 @@ const timeToSeconds = (time: string): number => {
   );
 };
 
+const meanOfThreeCalculator = pipe(
+  sum,
+  divide(__, 3),
+  (x) => x.toFixed(2),
+  Number
+);
+
 const averageOfFiveCalculator = ifElse<[number[]], number, number>(
   pipe(filter(lt(0)), length, equals(5)),
-  pipe(
-    sort(subtract),
-    (x) => slice(1, -1, x),
-    sum,
-    divide(__, 3),
-    (x) => x.toFixed(2),
-    Number
-  ),
+  pipe(sort(subtract), (x) => slice(1, -1, x), meanOfThreeCalculator, Number),
   always(Infinity)
 );
 
@@ -93,4 +93,5 @@ export {
   averageOfFiveCalculator,
   msToSeconds,
   computeScore,
+  meanOfThreeCalculator,
 };

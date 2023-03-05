@@ -1,6 +1,5 @@
 import { getSvg } from "../stores/scrambles.js";
 import pyra from "../assets/pyra.svg";
-import mega from "../assets/mega.svg";
 import sq1 from "../assets/sq1.svg";
 import axios from "axios";
 import { always, cond, equals, memoizeWith, T } from "ramda";
@@ -12,10 +11,7 @@ const pyraDefaultSvgString: string = await axios
   .then(({ data }) => data)
   .catch(() => "");
 
-const megaDefaultSvgString: string = await axios
-  .get(mega)
-  .then(({ data }) => data)
-  .catch(() => "");
+const megaDefaultSvgString = getSvg("MEGA", "");
 
 const sq1DefaultSvgString: string = await axios
   .get(sq1)

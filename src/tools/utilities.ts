@@ -12,6 +12,7 @@ const addParenthesis = (solve: string) => `(${solve})`;
 
 const formatSolvesArray = (solves: string[]) => {
   const numArray = R.map(timeToSeconds, solves);
+  if (solves.length === 3) return solves;
   return R.pipe(
     R.adjust(R.indexOf(Math.min(...numArray), numArray), addParenthesis),
     R.adjust(R.indexOf(Math.max(...numArray), numArray), addParenthesis)
