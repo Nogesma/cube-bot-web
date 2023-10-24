@@ -1,7 +1,12 @@
 <script lang="ts">
   import dayjs, { Dayjs } from "dayjs";
   import * as R from "ramda";
-  import { connectGanTimer, GanTimerState } from "../tools/ganBluetooth";
+  import { debounceTime, fromEvent, interval, merge, tap, Subscription } from 'rxjs';
+  import {
+    connectGanTimer,
+    makeTimeFromTimestamp,
+    GanTimerState,
+  } from "../tools/ganBluetooth";
   import { msToSeconds, secondsToTime } from "../tools/calculator";
   import { currentEvent, times } from "../stores/times";
   import {
@@ -69,73 +74,14 @@
       else timerText = "DNF";
     }, 1000);
   };
-
-  let isKeyDown = false;
-
-  const down = (event: KeyboardEvent) => {
-    if (isKeyDown || event.repeat) return;
-    if (event.key === " ") isKeyDown = true;
-    if (timerStatus === 1) {
-      stopTimer();
-      timerStatus = 0;
-    } else {
-      if (event.key !== " ") return;
-      event.preventDefault();
-      if (timerStatus === 0) {
-        timerSetReady();
-        timerStatus = 3;
-      } else if (timerStatus === 2) timerSetReady();
-    }
-  };
-
-  const up = (event: KeyboardEvent) => {
-    if (event.key !== " ") return;
-    isKeyDown = false;
-    event.preventDefault();
-    if (timerStatus === 3) {
-      if (hasInspection) {
-        startInspection();
-        timerStatus = 2;
-      } else {
-        startTimer();
-        timerStatus = 1;
-      }
-    } else if (timerStatus === 2) {
-      startTimer();
-      timerStatus = 1;
-    } else if (timerStatus === 0) red = false;
-  };
-
-  const touchStart = () => {
-    if (timerStatus === 1) {
-      stopTimer();
-      timerStatus = 0;
-    } else if (timerStatus === 0) {
-      timerSetReady();
-      timerStatus = 3;
-    } else if (timerStatus === 2) timerSetReady();
-  };
-
-  const touchEnd = () => {
-    if (timerStatus === 3) {
-      if (hasInspection) {
-        startInspection();
-        timerStatus = 2;
-      } else {
-        startTimer();
-        timerStatus = 1;
-      }
-    } else if (timerStatus === 2) {
-      startTimer();
-      timerStatus = 1;
-    } else if (timerStatus === 0) red = false;
-  };
-  const connete_timne = () => {
+  async function connete_timne() {
   console.log("dsqfdskljfdsfsd")
-   const conn = connectGanTimer();
-	conn.events$.subscribe((timerEvent) => {
-    switch (timerEvent.state) {
+   var conn = await connectGanTimer();
+   console.log(conn.events$);
+	conn.events$.subscribe((evt)  => {
+    switch (evt.state) {
         case GanTimerState.RUNNING:
+			console.log("running");
             if (timerStatus === 2) {
 			startTimer();
 			timerStatus = 1;
@@ -143,36 +89,19 @@
             break;
         case GanTimerState.STOPPED:
                 if (timerStatus === 1) {
+					console.log("stopped");
 					stopTimer();
 					timerStatus = 0;
 				}
             break;
         default:
-            console.log(`Timer changed state to ${GanTimerState[timerEvent.state]}`);
+            console.log(`Timer changed state to ${GanTimerState[evt.state]}`);
     }
 });};
 </script>
-
-<svelte:window on:keydown={down} on:keyup={up} />
-
-<div
-  on:touchstart|preventDefault={touchStart}
-  on:touchend|preventDefault={touchEnd}
-  class="flex-auto text-5xl flex justify-center items-center bg-base-100 w-full {timerStatus ===
-  1
-    ? 'overlay'
-    : ''} {green ? 'text-success' : ''} {red ? 'text-error' : ''}"
->
-  {timerText}
-</div>
-
 <style>
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
+	.buton{
+		width:50px;
+	}
 </style>
+<input on:click={connete_timne} type="image" id="image" class="buton" alt="Login" src="https://www.svgrepo.com/show/150129/bluetooth.svg" />
