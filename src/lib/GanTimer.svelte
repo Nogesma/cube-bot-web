@@ -82,7 +82,8 @@
     switch (evt.state) {
         case GanTimerState.RUNNING:
 			console.log("running");
-            if (timerStatus === 2) {
+			console.log(timerStatus);
+            if (timerStatus === 0) {
 			startTimer();
 			timerStatus = 1;
 			}
