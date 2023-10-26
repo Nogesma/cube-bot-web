@@ -1,7 +1,11 @@
 <script lang="ts">
   import dayjs, { Dayjs } from "dayjs";
   import * as R from "ramda";
-  import { connectGanTimer, GanTimerState } from "../tools/ganBluetooth";
+  	import {
+    connectGanTimer,
+    makeTimeFromTimestamp,
+    GanTimerState,
+  } from "../tools/ganBluetooth";
   import { msToSeconds, secondsToTime } from "../tools/calculator";
   import { currentEvent, times } from "../stores/times";
   import {
@@ -130,25 +134,31 @@
       timerStatus = 1;
     } else if (timerStatus === 0) red = false;
   };
-  const connete_timne = () => {
+  async function connete_timne() {
   console.log("dsqfdskljfdsfsd")
-   const conn = connectGanTimer();
-	conn.events$.subscribe((timerEvent) => {
-    switch (timerEvent.state) {
+   var conn = await connectGanTimer();
+   console.log(conn.events$);
+	conn.events$.subscribe((evt)  => {
+    switch (evt.state) {
         case GanTimerState.RUNNING:
-            if (timerStatus === 2) {
+			console.log("running");
+			console.log(timerStatus);
+            if (timerStatus === 0) {
 			startTimer();
 			timerStatus = 1;
+			console.log("DFDSFS");
+			console.log();
 			}
             break;
         case GanTimerState.STOPPED:
                 if (timerStatus === 1) {
+					console.log("stopped");
 					stopTimer();
-					timerStatus = 0;
+					timerStatus = 2;
 				}
             break;
         default:
-            console.log(`Timer changed state to ${GanTimerState[timerEvent.state]}`);
+            console.log(`Timer changed state to ${GanTimerState[evt.state]}`);
     }
 });};
 </script>
@@ -166,6 +176,7 @@
   {timerText}
 </div>
 
+<input on:click={connete_timne} type="image" id="image" class="buton" alt="Login" src="https://www.svgrepo.com/show/150129/bluetooth.svg" />
 <style>
   .overlay {
     position: fixed;
@@ -175,4 +186,7 @@
     height: 100%;
     z-index: 1000;
   }
+  	.buton{
+		width:50px;
+	}
 </style>

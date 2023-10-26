@@ -85,14 +85,13 @@
 			console.log(timerStatus);
             if (timerStatus === 0) {
 			startTimer();
-			timerStatus = 1;
+			console.log("DFDSFS");
 			}
             break;
         case GanTimerState.STOPPED:
                 if (timerStatus === 1) {
 					console.log("stopped");
 					stopTimer();
-					timerStatus = 0;
 				}
             break;
         default:
