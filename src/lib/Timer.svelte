@@ -40,10 +40,14 @@
     clearTimeout(timeout);
     inspectionTime = hasInspection ? msToSeconds(dayjs().diff(startTime)) : 0;
     startTime = dayjs();
+	console.log(startTime);
+	console.log($timerUpdate);
     if ($timerUpdate) {
       timeout = setInterval(displayTime, 10);
+	  console.log(timeout);
     } else {
       timerText = $runningTimerText;
+	  console.log(timerText);
     }
   };
 
@@ -143,19 +147,15 @@
         case GanTimerState.RUNNING:
 			console.log("running");
 			console.log(timerStatus);
-            if (timerStatus === 0) {
 			startTimer();
 			timerStatus = 1;
 			console.log("DFDSFS");
 			console.log();
-			}
             break;
         case GanTimerState.STOPPED:
-                if (timerStatus === 1) {
-					console.log("stopped");
-					stopTimer();
-					timerStatus = 2;
-				}
+				console.log("stopped");
+				stopTimer();
+				timerStatus = 2;
             break;
         default:
             console.log(`Timer changed state to ${GanTimerState[evt.state]}`);
@@ -173,7 +173,7 @@
     ? 'overlay'
     : ''} {green ? 'text-success' : ''} {red ? 'text-error' : ''}"
 >
-  {timerText}
+  <p>{timerText}</p>
 </div>
 
 <input on:click={connete_timne} type="image" id="image" class="buton" alt="Login" src="https://www.svgrepo.com/show/150129/bluetooth.svg" />
