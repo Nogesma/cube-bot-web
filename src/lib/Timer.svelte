@@ -54,7 +54,6 @@
     const penalty = inspectionTime < 15 ? 0 : inspectionTime < 17 ? 1 : 2;
     newTime(timerText, penalty);
     red = true;
-	console.log(timerText);
   };
 
   const timerSetReady = () => {
