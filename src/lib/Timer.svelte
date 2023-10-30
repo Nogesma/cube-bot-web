@@ -56,8 +56,9 @@
     clearTimeout(timeout);
     timerText = secondsToTime(msToSeconds(finalTime));
     const penalty = inspectionTime < 15 ? 0 : inspectionTime < 17 ? 1 : 2;
-    newTime(finalTime, penalty);
+    newTime(timerText, penalty);
     red = true;
+	console.log(timerText);
   };
 
   const timerSetReady = () => {
