@@ -40,14 +40,10 @@
     clearTimeout(timeout);
     inspectionTime = hasInspection ? msToSeconds(dayjs().diff(startTime)) : 0;
     startTime = dayjs();
-	console.log(startTime);
-	console.log($timerUpdate);
     if ($timerUpdate) {
       timeout = setInterval(displayTime, 10);
-	  console.log(timeout);
     } else {
       timerText = $runningTimerText;
-	  console.log(timerText);
     }
   };
 
@@ -140,21 +136,14 @@
     } else if (timerStatus === 0) red = false;
   };
   async function connete_timne() {
-  console.log("dsqfdskljfdsfsd")
    var conn = await connectGanTimer();
-   console.log(conn.events$);
 	conn.events$.subscribe((evt)  => {
     switch (evt.state) {
         case GanTimerState.RUNNING:
-			console.log("running");
-			console.log(timerStatus);
 			startTimer();
 			timerStatus = 1;
-			console.log("DFDSFS");
-			console.log();
             break;
         case GanTimerState.STOPPED:
-				console.log("stopped");
 				stopTimer();
 				timerStatus = 2;
             break;
