@@ -50,6 +50,7 @@
 
   $: isMo3 = $currentEvent === "666" || $currentEvent === "777";
 </script>
+
 <div class="flex flex-col h-full justify-evenly">
   {#if R.equals(isMo3 ? 3 : 5, $scrambleIndex)}
     <div class="flex-col flex-auto flex items-center justify-center basis-full">
