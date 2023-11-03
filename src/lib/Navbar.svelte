@@ -3,7 +3,6 @@
   import { getAvatarUrl } from "../tools/utilities.js";
   import { login } from "../stores/settings";
   import { push } from "svelte-spa-router";
-
   let avatarUrl: string;
 
   $: $login && (avatarUrl = getAvatarUrl(localStorage.avatar, localStorage.id));
@@ -20,8 +19,9 @@
   <div class="navbar-start">
     <a href="/#" class="btn btn-ghost normal-case text-xl">Cube Competitions</a>
   </div>
-
-  <div class="navbar-end">
+	
+	<div class="navbar-end">
+	
     <a
       href="#/rankings"
       class="btn btn-ghost normal-case text-xl hidden lg:flex">Classement</a

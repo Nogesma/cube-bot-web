@@ -5,7 +5,7 @@
     connectGanTimer,
     makeTimeFromTimestamp,
     GanTimerState,
-  } from "gan-web-bluetooth";
+  } from "../tools/ganBluetooth";
   import { msToSeconds, secondsToTime } from "../tools/calculator";
   import { currentEvent, times } from "../stores/times";
   import {
