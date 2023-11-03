@@ -26,6 +26,6 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/nogesma/cube-bot-web:latest
           cache-to: type=inline
           build-args: |
-            VITE_REDIRECT_URI=https://manosgr.live/
+            VITE_REDIRECT_URI=https://manosgr.tech/
             VITE_CLIENT_ID=475749622384558080
             VITE_BACKEND_URI=
