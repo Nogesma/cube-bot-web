@@ -12,20 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
+      - uses: actions/checkout@v4
+      - uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/nogesma/cube-bot-web:latest
-          cache-from: type=registry,ref=ghcr.io/nogesma/cube-bot-web:latest
-          cache-to: type=inline
-          build-args: |
+            image: cube-bot-web
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+            addLatest: true
+            build-args: |
             VITE_REDIRECT_URI=https://manosgr.tech/
             VITE_CLIENT_ID=475749622384558080
             VITE_BACKEND_URI=

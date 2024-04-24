@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 ARG VITE_CLIENT_ID
 ARG VITE_REDIRECT_URI
