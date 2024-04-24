@@ -20,7 +20,4 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
             addLatest: true
-            buildArgs: |
-              VITE_REDIRECT_URI=https://manosgr.tech/
-              VITE_CLIENT_ID=475749622384558080
-              VITE_BACKEND_URI=
+            buildArgs: ['VITE_REDIRECT_URI=https://manosgr.tech/', 'VITE_CLIENT_ID=475749622384558080', 'VITE_BACKEND_URI=']
