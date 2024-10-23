@@ -1,4 +1,4 @@
-http://manosgr.tech {
+http://cube.sfk5.fyi {
 	encode gzip
 	file_server {
 		precompressed br gzip
