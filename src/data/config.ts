@@ -48,6 +48,7 @@ const events = new Map([
   ["PYRA", "pyram"],
   ["SKEWB", "skewb"],
   ["SQ1", "sq1"],
+  ["4BLD", "444bf"],
 ]);
 
 const cubeDefaultColourScheme: CubeColourScheme = {

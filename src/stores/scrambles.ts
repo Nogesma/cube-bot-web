@@ -38,7 +38,18 @@ const scramblesSvg: Readable<string[]> = derived(
   ($currentEvent, set) => {
     if (
       $currentEvent &&
-      !includes($currentEvent, ["333", "222", "OH", "3BLD", "444", "555"])
+      !includes($currentEvent, [
+        "333",
+        "222",
+        "OH",
+        "3BLD",
+        "444",
+        "555",
+        "MEGA",
+        "666",
+        "777",
+        "4BLD",
+      ])
     ) {
       axios
         .get(`${import.meta.env.VITE_BACKEND_URI}/api/svg/${$currentEvent}`, {

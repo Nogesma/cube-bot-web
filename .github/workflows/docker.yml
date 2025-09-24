@@ -1,23 +1,21 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Build and publish docker image
 
 on:
   push:
-    branches: main
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: mr-smithers-excellent/docker-build-push@v6
+      - uses: docker/login-action@v3
         with:
-            image: cube-bot-web
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-            addLatest: true
-            buildArgs: VITE_REDIRECT_URI=https://cube.sfk5.fyi/, VITE_CLIENT_ID=475749622384558080, VITE_BACKEND_URI=
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ghcr.io/nogesma/cube-bot-web:latest
+          build-args: VITE_REDIRECT_URI=https://cube.sfk5.fyi/, VITE_CLIENT_ID=475749622384558080, VITE_BACKEND_URI=
