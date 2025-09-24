@@ -18,4 +18,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/nogesma/cube-bot-web:latest
-          build-args: VITE_REDIRECT_URI=https://cube.sfk5.fyi/, VITE_CLIENT_ID=475749622384558080, VITE_BACKEND_URI=
+          build-args: |
+            VITE_REDIRECT_URI=https://cube.sfk5.fyi/
+            VITE_CLIENT_ID=475749622384558080
+            VITE_BACKEND_URI=
