@@ -48,7 +48,7 @@
     $disableScramblesDisplayForBlind
   );
 
-  $: isMo3 = $currentEvent === "666" || $currentEvent === "777";
+  $: isMo3 = $currentEvent === "666" || $currentEvent === "777" || $currentEvent === "4BLD";
 </script>
 
 <div class="flex flex-col h-full justify-evenly">

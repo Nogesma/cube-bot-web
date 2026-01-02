@@ -4,11 +4,7 @@
 
   import { msToSeconds, secondsToTime } from "../tools/calculator";
   import { currentEvent, times } from "../stores/times";
-  import {
-    runningTimerText,
-    timerUpdate,
-    useInspection,
-  } from "../stores/settings.js";
+  import { runningTimerText, timerUpdate, useInspection } from "../stores/settings.js";
 
   let startTime: Dayjs;
   let timeout: NodeJS.Timer;
@@ -20,6 +16,7 @@
   let red = false;
   let timerText = "Ready";
   let finalTime;
+  let wakeLockSentinel: WakeLockSentinel | null = null;
 
   $: eventIndex = R.findIndex(R.propEq("event")($currentEvent))($times);
   $: solvesLens = R.lensPath([eventIndex, "solves"]);
@@ -30,7 +27,7 @@
   const displayTime = () =>
     (timerText = secondsToTime(msToSeconds(dayjs().diff(startTime))));
 
-  const startTimer = () => {
+  const startTimer = async () => {
     green = false;
     red = false;
     clearTimeout(timeout);
@@ -41,6 +38,12 @@
     } else {
       timerText = $runningTimerText;
     }
+    try {
+     wakeLockSentinel = await navigator.wakeLock.request();
+     console.log(wakeLockSentinel);
+    } catch (e) {
+      wakeLockSentinel = null;
+    }
   };
 
   const stopTimer = () => {
@@ -50,6 +53,11 @@
     const penalty = inspectionTime < 15 ? 0 : inspectionTime < 17 ? 1 : 2;
     newTime(finalTime, penalty);
     red = true;
+
+    if (wakeLockSentinel !== null) {
+      wakeLockSentinel.release();
+      wakeLockSentinel = null;
+    }
   };
 
   const timerSetReady = () => {

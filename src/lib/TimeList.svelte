@@ -68,7 +68,7 @@
     showInput = false;
   };
 
-  $: isMo3 = $currentEvent === "666" || $currentEvent === "777";
+  $: isMo3 = $currentEvent === "666" || $currentEvent === "777" || $currentEvent === "4BLD";
 </script>
 
 <svelte:window on:keydown={handleEnter} />
